@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>sunday.all</artifactId>
+		<groupId>com.alibaba.china.app</groupId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+	<groupId>com.alibaba.china.app</groupId>
+	<artifactId>sunday.bundle.war</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>bundle.war</name>
+	<dependencies>
+        <dependency>
+            <groupId>com.alibaba.china.app</groupId>
+            <artifactId>sunday.web.home</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<manifestEntries>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<timestamp>${timestamp}</timestamp>
+						</manifestEntries>
+					</archive>
+					<webrootDirectory>${basedir}/src/main/webapp</webrootDirectory>
+					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
