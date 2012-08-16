@@ -20,13 +20,15 @@
     <mvc:annotation-driven validator="validator"/>
     -->
 	<!-- ①：对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
-	<context:component-scan base-package="com.alibaba.china.rac.web.design.controller" />
+	<context:component-scan base-package="com.alibaba.sunday" />
 
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射，添加拦截器，类级别的处理器映射 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
+                <!--
 				<bean class="com.alibaba.china.rac.web.design.controller.DefaultHandlerInterceptor" />
+				-->
 			</list>
 		</property>
 	</bean>
@@ -34,9 +36,11 @@
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射， 配置一个基于注解的定制的WebBindingInitializer，解决日期转换问题，方法级别的处理器映射 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="cacheSeconds" value="0" />
+        <!--
 		<property name="webBindingInitializer">  
             <bean class="com.alibaba.china.rac.web.design.util.MyWebBinding" />  
-        </property>  
+        </property>
+          -->
 		<!-- 配置一下对json数据的转换 -->
 		<property name="messageConverters">
 			<list>
@@ -88,12 +92,15 @@
 		
 		<property name="defaultViews">
 			<list>
-				<!-- for application/json -->
-				<bean class="com.alibaba.china.rac.web.design.util.RacMappingJacksonJsonView" >
+				<!-- for application/json-->
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" >
+                    <!--
 				<property name="objectMapper">
 						<bean class="org.codehaus.jackson.map.ObjectMapper" />
 				</property>
+                        -->
 				</bean>
+
 				<!-- for application/xml -->
 				<bean class="org.springframework.web.servlet.view.xml.MarshallingView" >
 					<property name="marshaller">

@@ -126,6 +126,40 @@
 				<artifactId>hibernate-core</artifactId>
 				<version>4.1.5.SP1</version>
 			</dependency>
+			<!--jackson-->
+			<dependency>
+			  <groupId>org.codehaus.jackson</groupId>
+			  <artifactId>jackson-xc</artifactId>
+			  <version>1.9.9</version>
+			</dependency>
+			<dependency>
+			  <groupId>com.fasterxml.jackson.core</groupId>
+			  <artifactId>jackson-databind</artifactId>
+			  <version>2.0.5</version>
+			</dependency>
+			<!--xml-->
+			<dependency>
+			  <groupId>com.thoughtworks.xstream</groupId>
+			  <artifactId>xstream</artifactId>
+			  <version>1.4.2</version>
+			</dependency>
+			<!--velocity-->
+			<dependency>
+			  <groupId>velocity</groupId>
+			  <artifactId>velocity</artifactId>
+			  <version>1.5</version>
+			</dependency>
+			<dependency>
+			  <groupId>velocity-tools</groupId>
+			  <artifactId>velocity-tools-view</artifactId>
+			  <version>1.4</version>
+			</dependency>
+			<!-- apache commons-->
+			<dependency>
+			  <groupId>commons-digester</groupId>
+			  <artifactId>commons-digester</artifactId>
+			  <version>2.1</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -228,6 +262,38 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.1.5.SP1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>1.9.9</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.0.5</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.thoughtworks.xstream</groupId>
+		  <artifactId>xstream</artifactId>
+		  <version>1.4.2</version>
+		</dependency>
+		<!--velocity-->
+		<dependency>
+		  <groupId>velocity</groupId>
+		  <artifactId>velocity</artifactId>
+		  <version>1.5</version>
+		</dependency>
+		<dependency>
+		  <groupId>velocity-tools</groupId>
+		  <artifactId>velocity-tools-view</artifactId>
+		  <version>1.4</version>
+		</dependency>
+		<!-- apache commons-->
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.1</version>
 		</dependency>
 	</dependencies>
 	<build>

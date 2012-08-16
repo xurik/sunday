@@ -10,6 +10,7 @@
             </list>
         </property>
     </bean>
+    <import resource="spring/spring-mvc.xml"></import>
     <!--
       <import resource="spring/spring-security.xml"/>
        -->
