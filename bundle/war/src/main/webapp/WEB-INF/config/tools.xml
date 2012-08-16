@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GBK"?> 
+<toolbox>
+<tool>
+<key>stringUtils</key>
+<scope>request</scope>
+<class>org.apache.commons.lang.StringUtils</class>
+</tool>
+<tool>
+<key>velocityUtil</key>
+<scope>request</scope>
+<class>com.alibaba.china.rac.common.util.VelocityUtil</class>
+</tool>
+</toolbox>
