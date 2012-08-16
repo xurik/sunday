@@ -1,0 +1,8 @@
+.metadata
+#ignore obj and lib file
+**/**/target/
+**/target/
+
+*.iml
+*.ipr
+*.iws
