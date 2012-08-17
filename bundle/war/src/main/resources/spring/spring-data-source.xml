@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!--使用jetty的dbcp方式进行升级 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- 驱动不同 -->
+		<property name="driverClassName" value="com.alibaba.druid.proxy.DruidDriver" />
+		<property name="url"
+			value="jdbc:wrap-jdbc:driver=com.mysql.jdbc.Driver:filters=default:name=com.alibaba.dragoon.master:${rac.database.url}" />
+		<property name="username" value="${rac.database.username}" />
+		<property name="password" value="${rac.database.password}">
+		</property>
+		<property name="maxActive" value="5" />
+		<property name="initialSize" value="1" />
+		<property name="maxWait" value="60000" />
+		<property name="maxIdle" value="5" />
+		 <!-- 可以和maxActive保持一致 -->
+		<property name="minIdle" value="1" />
+		<!-- 可以和initialSize保持一致 -->
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- 注意和oracle设置的参数不同 -->
+		<property name="connectionProperties" value="clientEncoding=UTF-8" />
+		<!-- sql检查配置,在idle空闲线程检查时,检查链接有效性，丢弃无效的链接,实现自动重连 -->
+		<!-- 注意使用cobar时,因为走了F5进行负载,F5默认5分钟会关闭空闲链接,所以需要通过心跳SQL保证数据库链接不被异常关闭 -->
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="validationQuery" value="SELECT @@SQL_MODE" />
+		<property name="numTestsPerEvictionRun" value="-1" />
+	</bean>
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQLDialect
+                </prop>
+                <prop key="hibernate.show_sql">
+                    true
+                </prop>
+                <prop key="hibernate.current_session_context_class">
+                    org.springframework.orm.hibernate4.SpringSessionContext
+                </prop>
+            </props>
+        </property>
+
+        <property name="packagesToScan">
+            <list>
+                <value>com.virusyang.*</value>
+            </list>
+        </property>
+
+
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--
+   <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+       <property name="dataSource" ref="dataSource" />
+       <property name="configLocation" value="classpath:sqlmap/sqlmap-ibatis.xml" />
+   </bean>
+   <bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+       <property name="sqlMapClient" ref="sqlMapClient" />
+   </bean>
+    -->
+</beans>

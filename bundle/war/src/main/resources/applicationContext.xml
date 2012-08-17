@@ -11,6 +11,7 @@
         </property>
     </bean>
     <import resource="spring/spring-mvc.xml"></import>
+    <import resource="spring/spring-data-source.xml"></import>
     <!--
       <import resource="spring/spring-security.xml"/>
        -->
