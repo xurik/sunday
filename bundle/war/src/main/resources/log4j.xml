@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!--
+  - Log4j配置文件。
+  -
+  - 请使用专用的XML编辑器编辑此文件，以确保其符合log4j.dtd。
+  -
+  - @author Michael Zhou
+ -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <!-- ===================================================================== -->
+    <!--  以下是appender的定义                                                 -->
+    <!-- ===================================================================== -->
+    <appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/home/sunday/output/sunday/logs/sys/web/web.log"/>
+        <param name="append" value="false"/>
+        <param name="encoding" value="GBK"/>
+        <param name="threshold" value="error"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="DAL" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/home/sunday/output/rac/logs/sys/dal/dal.log"/>
+        <param name="append" value="false"/>
+        <param name="encoding" value="GBK"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <!--param name="Threshold" value="INFO"  为打印logger 去掉Threshold参数配置 /-->
+    <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern"
+               value="%d %p [%c] - %m%n" />
+    </layout>
+    </appender>
+
+    <!-- ===================================================================== -->
+    <!--  以下是logger的定义                                                   -->
+    <!-- ===================================================================== -->
+
+    <logger name="org.springframework" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <logger name="java.sql" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <!-- 类似定义logger节点打印具体类，或某包中的指定级别以上日志 -->
+    <logger name="org.hibernate">
+        <level value="INFO" />
+       <appender-ref ref="console" />
+    </logger>
+
+    <!-- ===================================================================== -->
+    <!--  Root logger的定义                                                    -->
+    <!-- ===================================================================== -->
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="PROJECT"/>
+    </root>
+</log4j:configuration>
