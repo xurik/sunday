@@ -38,15 +38,7 @@
 					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <configuration>
-                    <contextPath>/</contextPath>
-                    <stopPort>9966</stopPort>
-                    <stopKey>foo</stopKey>
-                </configuration>
-            </plugin>
+
 		</plugins>
 	</build>
 </project>

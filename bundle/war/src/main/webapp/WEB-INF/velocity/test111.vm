@@ -1,2 +1,32 @@
-cccccc  ccccccccccccccccccccccc
-${stringUtils.trimToEmpty("stringUtil111s")}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="jquery.placeholder.js"></script>
+    <title>jQuery-Placeholder</title>
+    <style>
+        body {font-family: arial, sans-serif;}
+        input, textarea {padding:4px; width:225px; font-family: arial, sans-serif; font-size: 12px;}
+        textarea {width: 425px; height: 200px;}
+        .placeholder {color: #aaa;}
+    </style>
+</head>
+<body>
+<h1>jQuery-Placeholder</h1>
+<p>This plugin supports a fallback for browsers that do not yet support the HTML5 placeholder attribute.</p>
+<h2>Demo form</h2>
+<form action="">
+    <input type="text" name="name" placeholder="e.g. John Doe">
+    <input type="email" name="email" placeholder="e.g. address@example.ext">
+    <input type="url" name="url" placeholder="e.g. http://mathiasbynens.be/">
+    <input type="tel" name="tel" placeholder="e.g. +32 472 77 69 88">
+    <input type="password" name="password" placeholder="e.g. h4x0rpr00fz">
+    <input type="search" name="search" placeholder="Search this site…">
+    <textarea name="message" placeholder="Your message goes here"></textarea>
+</form>
+<script>
+    $('input[placeholder], textarea[placeholder]').placeholder();
+</script>
+</body>
+</html>
