@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+<form action="save.json" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>name:</td>
+            <td><input name="name" value="$!name" /></td>
+            <td>display:</td>
+            <td><input name="display" /></td>
+        </tr>
+        <tr>
+            <td>type:</td>
+            <td><input name="type" /></td>
+            <td>description:</td>
+            <td><input name="description" /></td>
+        </tr>
+        <tr>
+            <td>parameter.name</td>
+            <td><input name="parameter.name" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="提交" /></td>
+        </tr>
+        </tbody>
+    </table>
+
+</form>
+
+</body>
+</html>

@@ -18,5 +18,7 @@ public class EntityTestDAOImpl implements EntityTestDAOCustom{
     private EntityManager entityManager ;
     public void findByName(){
         entityManager.createQuery("select u from EntityTest u").getResultList();
+
     }
+
 }

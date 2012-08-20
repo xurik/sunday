@@ -4,20 +4,25 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>sunday.all</artifactId>
+		<artifactId>jweb.all</artifactId>
 		<groupId>com.alibaba.china.app</groupId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<groupId>com.alibaba.china.app</groupId>
-	<artifactId>sunday.bundle.war</artifactId>
+	<artifactId>jweb.bundle.war</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>bundle.war</name>
 	<dependencies>
         <dependency>
             <groupId>com.alibaba.china.app</groupId>
-            <artifactId>sunday.web.home</artifactId>
+            <artifactId>jweb.web.home</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.china.app</groupId>
+            <artifactId>jweb.core.web</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 	</dependencies>
