@@ -11,7 +11,7 @@ import com.alibaba.china.jweb.core.entity.Component;
  */
 public interface ComponentService {
     /**
-     * ä¿å­˜UIç»„ä»¶
+     * ±£´æUI×é¼ş
      * @param component
      * @return
      */

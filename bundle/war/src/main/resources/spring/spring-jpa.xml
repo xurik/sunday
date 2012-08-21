@@ -14,7 +14,7 @@
     <context:component-scan base-package="com.alibaba.china.jweb.core.service" >
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    <!-- Jpa Entity Manager é…ç½® -->
+    <!-- Jpa Entity Manager ÅäÖÃ -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
@@ -37,11 +37,11 @@
         <property name="dataSource" ref="dataSource" />
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-    <!-- æ”¯æŒ @Transactional æ ‡è®° -->
+    <!-- Ö§³Ö @Transactional ±ê¼Ç -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-    <!-- å®šä¹‰aspectj   -->
+    <!-- ¶¨Òåaspectj   -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <!-- Spring Data Jpaé…ç½®, æ‰«æbase-packageä¸‹æ‰€æœ‰ç»§æ‰¿äºŽRepository<T,ID>çš„æŽ¥å£ -->
+    <!-- Spring Data JpaÅäÖÃ, É¨Ãèbase-packageÏÂËùÓÐ¼Ì³ÐÓÚRepository<T,ID>µÄ½Ó¿Ú -->
     <jpa:repositories base-package="com.alibaba.china.jweb.core" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory">
     </jpa:repositories>
     <jpa:repositories base-package="com.alibaba.sunday.dao" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory">

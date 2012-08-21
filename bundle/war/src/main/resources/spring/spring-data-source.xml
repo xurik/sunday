@@ -11,10 +11,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd"
        default-lazy-init="true">
-	<!--ä½¿ç”¨jettyçš„dbcpæ–¹å¼è¿›è¡Œå‡çº§ -->
+	<!--Ê¹ÓÃjettyµÄdbcp·½Ê½½øÐÐÉý¼¶ -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<!-- é©±åŠ¨ä¸åŒ -->
+		<!-- Çý¶¯²»Í¬ -->
 		<property name="driverClassName" value="com.alibaba.druid.proxy.DruidDriver" />
 		<property name="url"
 			value="jdbc:wrap-jdbc:driver=com.mysql.jdbc.Driver:filters=default:name=com.alibaba.dragoon.master:${rac.database.url}" />
@@ -25,17 +25,17 @@
 		<property name="initialSize" value="1" />
 		<property name="maxWait" value="60000" />
 		<property name="maxIdle" value="5" />
-		 <!-- å¯ä»¥å’ŒmaxActiveä¿æŒä¸€è‡´ -->
+		 <!-- ¿ÉÒÔºÍmaxActive±£³ÖÒ»ÖÂ -->
 		<property name="minIdle" value="1" />
-		<!-- å¯ä»¥å’ŒinitialSizeä¿æŒä¸€è‡´ -->
+		<!-- ¿ÉÒÔºÍinitialSize±£³ÖÒ»ÖÂ -->
 		<property name="removeAbandoned" value="true" />
 		<property name="removeAbandonedTimeout" value="180" />
 		<property name="timeBetweenEvictionRunsMillis" value="60000" />
 		<property name="minEvictableIdleTimeMillis" value="300000" />
-		<!-- æ³¨æ„å’Œoracleè®¾ç½®çš„å‚æ•°ä¸åŒ -->
+		<!-- ×¢ÒâºÍoracleÉèÖÃµÄ²ÎÊý²»Í¬ -->
 		<property name="connectionProperties" value="clientEncoding=UTF-8" />
-		<!-- sqlæ£€æŸ¥é…ç½®,åœ¨idleç©ºé—²çº¿ç¨‹æ£€æŸ¥æ—¶,æ£€æŸ¥é“¾æŽ¥æœ‰æ•ˆæ€§ï¼Œä¸¢å¼ƒæ— æ•ˆçš„é“¾æŽ¥,å®žçŽ°è‡ªåŠ¨é‡è¿ž -->
-		<!-- æ³¨æ„ä½¿ç”¨cobaræ—¶,å› ä¸ºèµ°äº†F5è¿›è¡Œè´Ÿè½½,F5é»˜è®¤5åˆ†é’Ÿä¼šå…³é—­ç©ºé—²é“¾æŽ¥,æ‰€ä»¥éœ€è¦é€šè¿‡å¿ƒè·³SQLä¿è¯æ•°æ®åº“é“¾æŽ¥ä¸è¢«å¼‚å¸¸å…³é—­ -->
+		<!-- sql¼ì²éÅäÖÃ,ÔÚidle¿ÕÏÐÏß³Ì¼ì²éÊ±,¼ì²éÁ´½ÓÓÐÐ§ÐÔ£¬¶ªÆúÎÞÐ§µÄÁ´½Ó,ÊµÏÖ×Ô¶¯ÖØÁ¬ -->
+		<!-- ×¢ÒâÊ¹ÓÃcobarÊ±,ÒòÎª×ßÁËF5½øÐÐ¸ºÔØ,F5Ä¬ÈÏ5·ÖÖÓ»á¹Ø±Õ¿ÕÏÐÁ´½Ó,ËùÒÔÐèÒªÍ¨¹ýÐÄÌøSQL±£Ö¤Êý¾Ý¿âÁ´½Ó²»±»Òì³£¹Ø±Õ -->
 		<property name="testWhileIdle" value="true" />
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />

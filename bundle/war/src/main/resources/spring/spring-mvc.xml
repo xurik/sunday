@@ -11,25 +11,25 @@
            http://www.springframework.org/schema/mvc    
            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd"
        default-autowire="byName">
-	<!-- é…ç½®é™æ€èµ„æºï¼Œç›´æŽ¥æ˜ å°„åˆ°å¯¹åº”çš„æ–‡ä»¶å¤¹ï¼Œä¸è¢«DispatcherServletå¤„ç†ï¼Œ3.14æ–°å¢žåŠŸèƒ½ï¼Œéœ€è¦é‡æ–°è®¾ç½®spring-mvc-3.1.xsd -->
+	<!-- ÅäÖÃ¾²Ì¬×ÊÔ´£¬Ö±½ÓÓ³Éäµ½¶ÔÓ¦µÄÎÄ¼þ¼Ð£¬²»±»DispatcherServlet´¦Àí£¬3.14ÐÂÔö¹¦ÄÜ£¬ÐèÒªÖØÐÂÉèÖÃspring-mvc-3.1.xsd -->
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/html/**" location="/html/" />
-	<!-- å¼€å¯æ”¯æŒ@NumberFormat @DateTimeFormat @Validæ ‡æ³¨ ,@DateTimeFormatç”¨äºŽbean æ—¥æœŸå±žæ€§çš„æ ¼å¼åŒ–,è¯·æŸ¥çœ‹: http://static.springsource.org/spring/docs/3.1.2.RELEASE/spring-framework-reference/htmlsingle/spring-framework-reference.html#mvc-config
+	<!-- ¿ªÆôÖ§³Ö@NumberFormat @DateTimeFormat @Valid±ê×¢ ,@DateTimeFormatÓÃÓÚbean ÈÕÆÚÊôÐÔµÄ¸ñÊ½»¯,Çë²é¿´: http://static.springsource.org/spring/docs/3.1.2.RELEASE/spring-framework-reference/htmlsingle/spring-framework-reference.html#mvc-config
     <mvc:annotation-driven validator="validator"/>
     -->
-	<!-- â‘ ï¼šå¯¹webåŒ…ä¸­çš„æ‰€æœ‰ç±»è¿›è¡Œæ‰«æï¼Œä»¥å®ŒæˆBeanåˆ›å»ºå’Œè‡ªåŠ¨ä¾èµ–æ³¨å…¥çš„åŠŸèƒ½ -->
-    <!-- è‡ªåŠ¨æ‰«æä¸”åªæ‰«æ@Controller -->
+	<!-- ¢Ù£º¶Ôweb°üÖÐµÄËùÓÐÀà½øÐÐÉ¨Ãè£¬ÒÔÍê³ÉBean´´½¨ºÍ×Ô¶¯ÒÀÀµ×¢ÈëµÄ¹¦ÄÜ -->
+    <!-- ×Ô¶¯É¨ÃèÇÒÖ»É¨Ãè@Controller -->
     <context:component-scan base-package="com.alibaba.china.jweb.core.web" use-default-filters="true">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <mvc:annotation-driven/>
-    <!-- å°†æ— æ³•mappingåˆ°Controllerçš„pathäº¤ç»™default servlet handlerå¤„ç† -->
+    <!-- ½«ÎÞ·¨mappingµ½ControllerµÄpath½»¸ødefault servlet handler´¦Àí -->
     <mvc:default-servlet-handler/>
 
-	<!-- â‘¡ï¼šå¯åŠ¨Spring MVCçš„æ³¨è§£åŠŸèƒ½ï¼Œå®Œæˆè¯·æ±‚å’Œæ³¨è§£POJOçš„æ˜ å°„ï¼Œæ·»åŠ æ‹¦æˆªå™¨ï¼Œç±»çº§åˆ«çš„å¤„ç†å™¨æ˜ å°„ -->
+	<!-- ¢Ú£ºÆô¶¯Spring MVCµÄ×¢½â¹¦ÄÜ£¬Íê³ÉÇëÇóºÍ×¢½âPOJOµÄÓ³Éä£¬Ìí¼ÓÀ¹½ØÆ÷£¬Àà¼¶±ðµÄ´¦ÀíÆ÷Ó³Éä -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
@@ -40,7 +40,7 @@
 		</property>
 	</bean>
 
-	<!-- â‘¡ï¼šå¯åŠ¨Spring MVCçš„æ³¨è§£åŠŸèƒ½ï¼Œå®Œæˆè¯·æ±‚å’Œæ³¨è§£POJOçš„æ˜ å°„ï¼Œ é…ç½®ä¸€ä¸ªåŸºäºŽæ³¨è§£çš„å®šåˆ¶çš„WebBindingInitializerï¼Œè§£å†³æ—¥æœŸè½¬æ¢é—®é¢˜ï¼Œæ–¹æ³•çº§åˆ«çš„å¤„ç†å™¨æ˜ å°„ -->
+	<!-- ¢Ú£ºÆô¶¯Spring MVCµÄ×¢½â¹¦ÄÜ£¬Íê³ÉÇëÇóºÍ×¢½âPOJOµÄÓ³Éä£¬ ÅäÖÃÒ»¸ö»ùÓÚ×¢½âµÄ¶¨ÖÆµÄWebBindingInitializer£¬½â¾öÈÕÆÚ×ª»»ÎÊÌâ£¬·½·¨¼¶±ðµÄ´¦ÀíÆ÷Ó³Éä -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="cacheSeconds" value="0" />
         <!--
@@ -48,7 +48,7 @@
             <bean class="com.alibaba.china.rac.web.design.util.MyWebBinding" />  
         </property>
           -->
-		<!-- é…ç½®ä¸€ä¸‹å¯¹jsonæ•°æ®çš„è½¬æ¢ -->
+		<!-- ÅäÖÃÒ»ÏÂ¶ÔjsonÊý¾ÝµÄ×ª»» -->
 		<property name="messageConverters">
 			<list>
 				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
@@ -56,12 +56,12 @@
 		</property>
 	</bean>
 
-    <!-- æ ¹æ®å®¢æˆ·ç«¯çš„ä¸åŒçš„è¯·æ±‚å†³å®šä¸åŒçš„viewè¿›è¡Œå“åº”, å¦‚ /blog/1.json /blog/1.xml -->
+    <!-- ¸ù¾Ý¿Í»§¶ËµÄ²»Í¬µÄÇëÇó¾ö¶¨²»Í¬µÄview½øÐÐÏìÓ¦, Èç /blog/1.json /blog/1.xml -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
     	<property name="ignoreAcceptHeader" value="true"/>
 		<property name="defaultContentType" value="text/html"/>
 		
-    	<!-- æ‰©å±•åè‡³mimeTypeçš„æ˜ å°„,å³ /user.json => application/json -->
+    	<!-- À©Õ¹ÃûÖÁmimeTypeµÄÓ³Éä,¼´ /user.json => application/json -->
 		<property name="mediaTypes">
 			<map>
 				<entry key="json" value="application/json;charset=UTF-8" />
@@ -70,7 +70,7 @@
                 <entry key="do" value="text/html;charset=UTF-8"/>
 			</map>
 		</property>
-		<!-- ç”¨äºŽå¼€å¯ /userinfo/123?format=json çš„æ”¯æŒ -->
+		<!-- ÓÃÓÚ¿ªÆô /userinfo/123?format=json µÄÖ§³Ö -->
 		<property name="favorParameter" value="false"/>
 		<!---->
 		<property name="viewResolvers">
@@ -154,7 +154,7 @@
         </property>
     </bean>
 
-	<!-- â‘¢ï¼šå¯¹æ¨¡åž‹è§†å›¾åç§°çš„è§£æžï¼Œå³åœ¨æ¨¡åž‹è§†å›¾åç§°æ·»åŠ å‰åŽç¼€ InternalResourceViewResolveré»˜è®¤çš„å°±æ˜¯JstlViewæ‰€ä»¥è¿™é‡Œå°±ä¸ç”¨é…ç½®viewClassäº†
+	<!-- ¢Û£º¶ÔÄ£ÐÍÊÓÍ¼Ãû³ÆµÄ½âÎö£¬¼´ÔÚÄ£ÐÍÊÓÍ¼Ãû³ÆÌí¼ÓÇ°ºó×º InternalResourceViewResolverÄ¬ÈÏµÄ¾ÍÊÇJstlViewËùÒÔÕâÀï¾Í²»ÓÃÅäÖÃviewClassÁË
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"></property>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <!--
-  - Log4jé…ç½®æ–‡ä»¶ã€‚
+  - Log4jÅäÖÃÎÄ¼þ¡£
   -
-  - è¯·ä½¿ç”¨ä¸“ç”¨çš„XMLç¼–è¾‘å™¨ç¼–è¾‘æ­¤æ–‡ä»¶ï¼Œä»¥ç¡®ä¿å…¶ç¬¦åˆlog4j.dtdã€‚
+  - ÇëÊ¹ÓÃ×¨ÓÃµÄXML±à¼­Æ÷±à¼­´ËÎÄ¼þ£¬ÒÔÈ·±£Æä·ûºÏlog4j.dtd¡£
   -
   - @author Michael Zhou
  -->
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
     <!-- ===================================================================== -->
-    <!--  ä»¥ä¸‹æ˜¯appenderçš„å®šä¹‰                                                 -->
+    <!--  ÒÔÏÂÊÇappenderµÄ¶¨Òå                                                 -->
     <!-- ===================================================================== -->
     <appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="/home/sunday/output/sunday/logs/sys/web/web.log"/>
@@ -31,7 +31,7 @@
     </appender>
 
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
-    <!--param name="Threshold" value="INFO"  ä¸ºæ‰“å°logger åŽ»æŽ‰Thresholdå‚æ•°é…ç½® /-->
+    <!--param name="Threshold" value="INFO"  Îª´òÓ¡logger È¥µôThreshold²ÎÊýÅäÖÃ /-->
     <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern"
                value="%d %p [%c] - %m%n" />
@@ -39,7 +39,7 @@
     </appender>
 
     <!-- ===================================================================== -->
-    <!--  ä»¥ä¸‹æ˜¯loggerçš„å®šä¹‰                                                   -->
+    <!--  ÒÔÏÂÊÇloggerµÄ¶¨Òå                                                   -->
     <!-- ===================================================================== -->
 
     <logger name="org.springframework" additivity="false">
@@ -50,14 +50,14 @@
         <level value="debug"/>
         <appender-ref ref="console"/>
     </logger>
-    <!-- ç±»ä¼¼å®šä¹‰loggerèŠ‚ç‚¹æ‰“å°å…·ä½“ç±»ï¼Œæˆ–æŸåŒ…ä¸­çš„æŒ‡å®šçº§åˆ«ä»¥ä¸Šæ—¥å¿— -->
+    <!-- ÀàËÆ¶¨Òålogger½Úµã´òÓ¡¾ßÌåÀà£¬»òÄ³°üÖÐµÄÖ¸¶¨¼¶±ðÒÔÉÏÈÕÖ¾ -->
     <logger name="org.hibernate">
         <level value="INFO" />
        <appender-ref ref="console" />
     </logger>
 
     <!-- ===================================================================== -->
-    <!--  Root loggerçš„å®šä¹‰                                                    -->
+    <!--  Root loggerµÄ¶¨Òå                                                    -->
     <!-- ===================================================================== -->
     <root>
         <level value="debug"/>

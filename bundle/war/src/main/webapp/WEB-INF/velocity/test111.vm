@@ -22,7 +22,7 @@
     <input type="url" name="url" placeholder="e.g. http://mathiasbynens.be/">
     <input type="tel" name="tel" placeholder="e.g. +32 472 77 69 88">
     <input type="password" name="password" placeholder="e.g. h4x0rpr00fz">
-    <input type="search" name="search" placeholder="Search this siteâ€¦">
+    <input type="search" name="search" placeholder="Search this site¡­">
     <textarea name="message" placeholder="Your message goes here"></textarea>
 </form>
 <script>

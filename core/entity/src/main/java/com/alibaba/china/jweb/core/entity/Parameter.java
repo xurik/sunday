@@ -43,7 +43,7 @@ public class Parameter extends BaseEntity{
     private Boolean isRequired;
     @Column(name = "VALIDATOR")
     private String validator;
-    /** æ‰€å±žçˆ¶ç±» **/
+    /** ËùÊô¸¸Àà **/
     @ManyToOne(cascade=CascadeType.REFRESH)
     @JoinColumn(name="PARENT_ID")
     private Parameter parent;

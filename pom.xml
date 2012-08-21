@@ -203,7 +203,7 @@
 				<version>${slf4j.version}</version>
 			</dependency>
 
-			<!-- slf4j-log4j缁戝畾 -->
+			<!-- slf4j-log4j绑定 -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
@@ -211,7 +211,7 @@
 				<scope>runtime</scope>
 			</dependency>
 
-			<!-- common-logging 瀹為檯璋冪敤slf4j -->
+			<!-- common-logging 实际调用slf4j -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
@@ -219,7 +219,7 @@
 				<scope>runtime</scope>
 			</dependency>
 
-			<!-- java.util.logging 瀹為檯璋冪敤slf4j -->
+			<!-- java.util.logging 实际调用slf4j -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jul-to-slf4j</artifactId>
@@ -441,7 +441,7 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 
-		<!-- slf4j-log4j缁戝畾 -->
+		<!-- slf4j-log4j绑定 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -449,7 +449,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- common-logging 瀹為檯璋冪敤slf4j -->
+		<!-- common-logging 实际调用slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -457,7 +457,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- java.util.logging 瀹為檯璋冪敤slf4j -->
+		<!-- java.util.logging 实际调用slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
