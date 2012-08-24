@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="GBK" />
+    <!--custom define css-->
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-ui/redmond/jquery-ui-1.8.20.custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jqGrid/ui.jqgrid.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/codemirror.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/theme/night.css" type="text/css" media="screen" />
+    <style>.CodeMirror {border: 1px solid black;}</style>
+    <!--引入jquery&jgrid-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/jquery-1.7.2.min.js" ></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-ui/jquery-ui-1.8.20.custom.min.js"></script>
+
+    <!--时间日期控件-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-form-plugin.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/codemirror.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/mode/velocity/velocity.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/template.js"></script>
+    <title></title>
+</head>
+<body>
+
+    <form id="template_form" name="component_template" method="post" action="">
+        <input id="componentCode" name="componentCode" value="$!componentCode" type="hidden"/>
+        <label>解析器</label>
+        <select name="resolver">
+            <option value="velocity">Velocity</option>
+        </select>
+        <br />
+        <textarea id="component_template" name="template">$!template</textarea>
+        <br />
+
+        <input id="saveTemplate" type="button" value="保存" class="j-button">
+    </form>
+
+</body>
+</html>

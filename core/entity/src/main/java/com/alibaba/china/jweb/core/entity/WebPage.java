@@ -8,6 +8,10 @@
 
 package com.alibaba.china.jweb.core.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,23 +22,35 @@ import java.util.List;
  * Date: 8/20/12
  * Time: 3:39 PM
  */
-@Entity(name="JWEB_WEB_PAGE")
+@Entity
+@Table(name = "JWEB_WEB_PAGE")
 public class WebPage extends BaseEntity{
+    @Column(name="CODE")
+    private String code;
     @Column(name = "NAME")
     private String name;
-    @Column(name="DISPLAY")
-    private String display;
-    @Column(name="URL")
-    private String url;
+    @Column(name = "THEME")
+    private String theme;
+    @Column(name="URI")
+    private String uri;
     @Column(name="OWNER")
     private String owner;
     @Column(name="DESCRIPTION")
     private String description;
-    @ManyToOne(cascade= CascadeType.REFRESH)
-    @JoinColumn(name="WEB_APP_ID")
-    private WebApp webApp;
-    @OneToMany(mappedBy = "webPage",targetEntity=Widget.class,fetch=FetchType.LAZY)
-    private List<Widget> widgets;
+    @Column(name="WEB_APP_CODE")
+    private String webAppCode;
+    @Column(name = "WIDGET_ID")
+    private Long widgetId;
+    @Transient
+    private String html;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -44,20 +60,20 @@ public class WebPage extends BaseEntity{
         this.name = name;
     }
 
-    public String getDisplay() {
-        return display;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUri() {
+        return uri;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getOwner() {
@@ -76,19 +92,27 @@ public class WebPage extends BaseEntity{
         this.description = description;
     }
 
-    public WebApp getWebApp() {
-        return webApp;
+    public String getWebAppCode() {
+        return webAppCode;
     }
 
-    public void setWebApp(WebApp webApp) {
-        this.webApp = webApp;
+    public void setWebAppCode(String webAppCode) {
+        this.webAppCode = webAppCode;
     }
 
-    public List<Widget> getWidgets() {
-        return widgets;
+    public Long getWidgetId() {
+        return widgetId;
     }
 
-    public void setWidgets(List<Widget> widgets) {
-        this.widgets = widgets;
+    public void setWidgetId(Long widgetId) {
+        this.widgetId = widgetId;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
     }
 }

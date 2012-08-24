@@ -9,6 +9,7 @@
 package com.alibaba.china.jweb.core.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,15 +20,14 @@ import java.util.Date;
  * Time: 10:18 AM
  */
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseEntity  implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
     protected Long id;
     @Column(name="GMT_CREATE")
     protected Date gmtCreate;
     @Column(name="GMT_MODIFIED")
-    @Version
     protected Date gmtModified;
     @Column(name="CREATOR")
     protected String creator;

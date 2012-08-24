@@ -8,7 +8,12 @@
 
 package com.alibaba.china.jweb.core.entity;
 
-import javax.persistence.*;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,17 +25,17 @@ import java.util.Set;
  * Date: 8/20/12
  * Time: 11:44 AM
  */
-@Entity(name = "JWEB_COMPONENT_PARAMETER")
+@Entity
+@Table(name = "JWEB_COMPONENT_PARAMETER")
 public class Parameter extends BaseEntity{
+    @Column(name = "CODE")
+    private String code;
     @Column(name = "NAME")
     private String name;
-    @Column(name="DISPLAY")
-    private String display;
     @Column(name = "XTYPE")
     private String type;
-    @ManyToOne(cascade=CascadeType.REFRESH)
-    @JoinColumn(name="COMPONENT_ID")
-    private Component component;
+    @Column(name="COMPONENT_CODE")
+    private String componentCode;
     @Column(name = "IS_LOOP")
     private Boolean isLoop;
     @Column(name = "DESCRIPTION")
@@ -43,12 +48,14 @@ public class Parameter extends BaseEntity{
     private Boolean isRequired;
     @Column(name = "VALIDATOR")
     private String validator;
-    /** À˘ Ù∏∏¿‡ **/
-    @ManyToOne(cascade=CascadeType.REFRESH)
-    @JoinColumn(name="PARENT_ID")
-    private Parameter parent;
-    @OneToMany(cascade={CascadeType.REFRESH,CascadeType.REMOVE},mappedBy="parent")
-    private List<Parameter> parameters;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -56,14 +63,6 @@ public class Parameter extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
     }
 
     public String getType() {
@@ -74,12 +73,12 @@ public class Parameter extends BaseEntity{
         this.type = type;
     }
 
-    public Component getComponent() {
-        return component;
+    public String getComponentCode() {
+        return componentCode;
     }
 
-    public void setComponent(Component component) {
-        this.component = component;
+    public void setComponentCode(String componentCode) {
+        this.componentCode = componentCode;
     }
 
     public Boolean getLoop() {
@@ -128,21 +127,5 @@ public class Parameter extends BaseEntity{
 
     public void setValidator(String validator) {
         this.validator = validator;
-    }
-
-    public Parameter getParent() {
-        return parent;
-    }
-
-    public void setParent(Parameter parent) {
-        this.parent = parent;
-    }
-
-    public List<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(List<Parameter> parameters) {
-        this.parameters = parameters;
     }
 }

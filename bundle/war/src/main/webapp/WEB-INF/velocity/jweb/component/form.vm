@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="GBK" />
+    <!--custom define css-->
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-ui/redmond/jquery-ui-1.8.20.custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jqGrid/ui.jqgrid.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/codemirror.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/theme/night.css" type="text/css" media="screen" />
+    <style>.CodeMirror {border: 1px solid black;}</style>
+    <!--引入jquery&jgrid-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/jquery-1.7.2.min.js" ></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-ui/jquery-ui-1.8.20.custom.min.js"></script>
+
+    <!--时间日期控件-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-form-plugin.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/codemirror.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/mode/velocity/velocity.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/component.js"></script>
     <title></title>
 </head>
 <body>
-<form action="save.json" method="post">
-    <table>
-        <tbody>
-        <tr>
-            <td>name:</td>
-            <td><input name="name" value="$!name" /></td>
-            <td>display:</td>
-            <td><input name="display" /></td>
-        </tr>
-        <tr>
-            <td>type:</td>
-            <td><input name="type" /></td>
-            <td>description:</td>
-            <td><input name="description" /></td>
-        </tr>
-        <tr>
-            <td>parameter.name</td>
-            <td><input name="parameter.name" /></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="提交" /></td>
-        </tr>
-        </tbody>
-    </table>
-
-</form>
+<div id="tabs">
+    <ul>
+        <li><a id="tab-1" href="#tabs-1">组件列表</a></li>
+        <li><a id="tab-2" href="#tabs-2">参数</a></li>
+        <li><a id="tab-3" href="#tabs-3">模版</a></li>
+    </ul>
+    <div id="tabs-1" style="padding: 0">
+        <input type="hidden" id="componentCode" />
+        <table id="component_list"></table>
+        <div id="component_pagered"></div>
+    </div>
+    <div id="tabs-2" style="padding: 0">
+        <table id="parameter_list"></table>
+        <div id="parameter_pagered"></div>
+    </div>
+    <div id="tabs-3" style="padding: 0">
+        <iframe id="tempate_iframe" src="" width="100%" height="600px;"></iframe>
+    </div>
+</div>
 
 </body>
 </html>

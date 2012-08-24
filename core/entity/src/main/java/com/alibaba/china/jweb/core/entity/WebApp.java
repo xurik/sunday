@@ -8,7 +8,12 @@
 
 package com.alibaba.china.jweb.core.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,12 +23,13 @@ import java.util.List;
  * Date: 8/20/12
  * Time: 9:41 AM
  */
-@Entity(name = "JWEB_WEB_APP")
+@Entity
+@Table(name = "JWEB_WEB_APP")
 public class WebApp extends BaseEntity{
+    @Column(name="CODE")
+    private String code;
     @Column(name = "NAME")
     private String name;
-    @Column(name="DISPLAY")
-    private String display;
     @Column(name="VERSION")
     private String version;
     @Column(name="OWNER")
@@ -34,8 +40,16 @@ public class WebApp extends BaseEntity{
     private Boolean isDeleted;
     @Column(name="HOME_LINK")
     private String homeLink;
-    @OneToMany(mappedBy = "webApp",targetEntity=WebPage.class,fetch=FetchType.LAZY)
+    @Transient
     private List<WebPage> webPages;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -43,14 +57,6 @@ public class WebApp extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
     }
 
     public String getVersion() {

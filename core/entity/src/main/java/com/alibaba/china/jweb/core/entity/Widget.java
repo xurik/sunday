@@ -8,7 +8,11 @@
 
 package com.alibaba.china.jweb.core.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
+import java.util.List;
+
 
 /**
  * com.alibaba.china.jweb.core.entity:
@@ -17,28 +21,36 @@ import javax.persistence.*;
  * Date: 8/20/12
  * Time: 2:31 PM
  */
-@Entity(name = "JWEB_WIDGET")
+@Entity
+@Table(name = "JWEB_WIDGET")
 public class Widget extends BaseEntity{
+
+    @Column(name="CODE")
+    private String code;
     @Column(name = "NAME")
     private String name;
-    @Column(name="DISPLAY")
-    private String display;
     @Column(name = "XTYPE")
     private String type;
     @Column(name = "VERSION")
     private String version;
     @Column(name = "PARAMETERS")
     private String parameters;
-    @Column(name = "LOOP_PARAMETERS")
-    private String loopParameters;
-    @Column(name = "WIDGET_ORDER")
-    private String order;
-    @ManyToOne(cascade= CascadeType.REFRESH)
-    @JoinColumn(name="COMPONENT_ID")
-    private Component component;
-    @ManyToOne(cascade= CascadeType.REFRESH)
-    @JoinColumn(name="WEB_PAGE_ID")
-    private WebPage webPage;
+    @Column(name = "LOOP_CHILDREN")
+    private String loopChildren;
+    @Column(name = "NUM")
+    private String num;
+    @Column(name="COMPONENT_CODE")
+    private String componentCode;
+    @Column(name="ELEMENT_CHILDREN")
+    private String elementChildren;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -46,14 +58,6 @@ public class Widget extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
     }
 
     public String getType() {
@@ -80,35 +84,35 @@ public class Widget extends BaseEntity{
         this.parameters = parameters;
     }
 
-    public String getLoopParameters() {
-        return loopParameters;
+    public String getLoopChildren() {
+        return loopChildren;
     }
 
-    public void setLoopParameters(String loopParameters) {
-        this.loopParameters = loopParameters;
+    public void setLoopChildren(String loopChildren) {
+        this.loopChildren = loopChildren;
     }
 
-    public String getOrder() {
-        return order;
+    public String getNum() {
+        return num;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setNum(String num) {
+        this.num = num;
     }
 
-    public Component getComponent() {
-        return component;
+    public String getComponentCode() {
+        return componentCode;
     }
 
-    public void setComponent(Component component) {
-        this.component = component;
+    public void setComponentCode(String componentCode) {
+        this.componentCode = componentCode;
     }
 
-    public WebPage getWebPage() {
-        return webPage;
+    public String getElementChildren() {
+        return elementChildren;
     }
 
-    public void setWebPage(WebPage webPage) {
-        this.webPage = webPage;
+    public void setElementChildren(String elementChildren) {
+        this.elementChildren = elementChildren;
     }
 }

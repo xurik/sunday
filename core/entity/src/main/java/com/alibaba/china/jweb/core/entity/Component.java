@@ -8,6 +8,9 @@
 
 package com.alibaba.china.jweb.core.entity;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
@@ -20,21 +23,34 @@ import java.util.Set;
  * Date: 8/20/12
  * Time: 10:15 AM
  */
-@Entity(name = "JWEB_COMPONENT")
+@Entity
+@Table(name = "JWEB_COMPONENT")
 public class Component extends BaseEntity{
-    @Column(name="NAME")
+    @Column(name="CODE",unique = true)
+    private String code;
+    @Column(name="NAME",unique = true)
     private String name;
-    @Column(name="DISPLAY")
-    private String display;
     @Column(name="XTYPE")
     private String type;
     @Column(name="DESCRIPTION")
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="TEMPLATE_ID")
-    private Template template;
-    @OneToMany(mappedBy = "component",targetEntity=Parameter.class,fetch=FetchType.EAGER)
+    @Column(name="THUMBNAIL")
+    private String thumbnail;
+    @Column(name="TEMPLATE")
+    @Lob
+    private String template;
+    @Column(name = "RESOLVER")
+    private String resolver;
+    @Transient
     private List<Parameter> parameters;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -42,14 +58,6 @@ public class Component extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
     }
 
     public String getType() {
@@ -68,12 +76,28 @@ public class Component extends BaseEntity{
         this.description = description;
     }
 
-    public Template getTemplate() {
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getTemplate() {
         return template;
     }
 
-    public void setTemplate(Template template) {
+    public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public String getResolver() {
+        return resolver;
+    }
+
+    public void setResolver(String resolver) {
+        this.resolver = resolver;
     }
 
     public List<Parameter> getParameters() {

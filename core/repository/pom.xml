@@ -19,6 +19,11 @@
 		    <groupId>com.alibaba.china.app</groupId>
 		    <artifactId>jweb.core.entity</artifactId>
 		    <version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba.china.app</groupId>
+		    <artifactId>jweb.core.commom</artifactId>
+		    <version>1.0-SNAPSHOT</version>
 		</dependency>	
 	</dependencies>
 </project>
