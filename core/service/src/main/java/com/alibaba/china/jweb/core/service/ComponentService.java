@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public interface ComponentService {
     Iterable<Component> list(Component component);
+
     /**
      * 保存UI组件
+     *
      * @param component
      * @return
      */
@@ -24,6 +26,7 @@ public interface ComponentService {
 
     /**
      * 根据ID获取组件
+     *
      * @param id
      * @return
      */
@@ -31,6 +34,7 @@ public interface ComponentService {
 
     /**
      * 根据ID获取组件
+     *
      * @param code
      * @return
      */
@@ -38,6 +42,7 @@ public interface ComponentService {
 
     /**
      * 根据Name获取组件的参数列表
+     *
      * @param name
      * @return
      */
@@ -45,6 +50,7 @@ public interface ComponentService {
 
     /**
      * 保存参数
+     *
      * @param parameter
      * @param componentCode
      * @return
@@ -53,15 +59,17 @@ public interface ComponentService {
 
     /**
      * 保存模板
+     *
      * @param componentCode
      * @param resolver
      * @param template
      * @return
      */
-    Component saveTemplate(String componentCode,String resolver,String template);
+    Component saveTemplate(String componentCode, String resolver, String template);
 
     /**
      * 根据Type 分组
+     *
      * @return
      */
     List buildTree();

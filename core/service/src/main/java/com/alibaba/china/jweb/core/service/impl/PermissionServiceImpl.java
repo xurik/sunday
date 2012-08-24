@@ -9,7 +9,7 @@ import com.alibaba.china.jweb.core.service.PermissionService;
  * Date: 8/22/12
  * Time: 4:02 PM
  */
-public class PermissionServiceImpl implements PermissionService{
+public class PermissionServiceImpl implements PermissionService {
     public String getPermissionUserName() {
         return "ri.xur";
     }

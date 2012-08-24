@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 类WriterUtil.java的实现描述：TODO 类实现描述
- * 
+ *
  * @author ri.xur Jul 30, 2012 4:40:23 PM
  */
 public class WriterUtil {

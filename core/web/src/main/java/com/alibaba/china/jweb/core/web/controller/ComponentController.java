@@ -27,54 +27,58 @@ public class ComponentController {
 
     /**
      * 组件管理
+     *
      * @param id
      * @return
      */
     @RequestMapping("/form")
-    public String form(Long id){
+    public String form(Long id) {
         return "jweb/component/form";
     }
 
     /**
      * 查询所有组件
+     *
      * @param component
      * @param modelMap
      */
     @RequestMapping("/list")
-    public void list(Component component,ModelMap modelMap){
-        modelMap.put("rows",componentService.list(component));
+    public void list(Component component, ModelMap modelMap) {
+        modelMap.put("rows", componentService.list(component));
     }
 
 
     /**
      * 保存组件
+     *
      * @param component
      * @param modelMap
      */
     @RequestMapping("/save")
-    public void save(Component component,ModelMap modelMap){
+    public void save(Component component, ModelMap modelMap) {
         component = componentService.save(component);
-        modelMap.addAttribute("data",component);
-        modelMap.addAttribute("success",true);
+        modelMap.addAttribute("data", component);
+        modelMap.addAttribute("success", true);
     }
 
     /**
      * 获取组件模版
+     *
      * @param componentCode
      * @param modelMap
      * @return
      */
     @RequestMapping("/template/{componentCode}")
-    public String geTemplate(@PathVariable String componentCode,ModelMap modelMap){
+    public String geTemplate(@PathVariable String componentCode, ModelMap modelMap) {
         Assert.notNull(componentCode);
-        modelMap.put("componentCode",componentCode);
+        modelMap.put("componentCode", componentCode);
         Component component = componentService.getByCode(componentCode);
-        if(component != null){
-            if(StringUtils.isNotBlank(component.getTemplate())){
-                modelMap.put("template",component.getTemplate());
+        if (component != null) {
+            if (StringUtils.isNotBlank(component.getTemplate())) {
+                modelMap.put("template", component.getTemplate());
             }
-            if(StringUtils.isNotBlank(component.getResolver())){
-                modelMap.put("resolver",component.getResolver());
+            if (StringUtils.isNotBlank(component.getResolver())) {
+                modelMap.put("resolver", component.getResolver());
             }
 
         }
@@ -83,40 +87,44 @@ public class ComponentController {
 
     /**
      * 保存组件模板
+     *
      * @param componentCode
      * @param resolver
      * @param template
      * @param modelMap
      */
     @RequestMapping("/saveTemplate/{componentCode}")
-    public void saveParameter(@PathVariable String componentCode,String resolver,String template, ModelMap modelMap){
-        componentService.saveTemplate(componentCode,resolver,template);
-        modelMap.put("success",true);
+    public void saveParameter(@PathVariable String componentCode, String resolver, String template, ModelMap modelMap) {
+        componentService.saveTemplate(componentCode, resolver, template);
+        modelMap.put("success", true);
     }
 
     /**
      * 获取组件参数
+     *
      * @param code
      * @param modelMap
      */
     @RequestMapping("/getParameters/{code}")
-    public void getParameters(@PathVariable String code, ModelMap modelMap){
-        modelMap.put("rows",componentService.getParametersByCode(code));
+    public void getParameters(@PathVariable String code, ModelMap modelMap) {
+        modelMap.put("rows", componentService.getParametersByCode(code));
     }
 
     /**
      * 保存组件参数
+     *
      * @param parameter
      * @param componentCode
      * @param modelMap
      */
     @RequestMapping("/saveParameter/{componentCode}")
-    public void saveParameter(Parameter parameter,@PathVariable String componentCode, ModelMap modelMap){
-        componentService.saveParameter(parameter,componentCode);
-        modelMap.put("success",true);
+    public void saveParameter(Parameter parameter, @PathVariable String componentCode, ModelMap modelMap) {
+        componentService.saveParameter(parameter, componentCode);
+        modelMap.put("success", true);
     }
+
     @RequestMapping("/componentTree")
-    public void componentTree(ModelMap modelMap){
+    public void componentTree(ModelMap modelMap) {
         modelMap.put("data", componentService.buildTree());
     }
 

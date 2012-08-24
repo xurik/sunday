@@ -25,20 +25,20 @@ import java.util.List;
  */
 @Entity
 @Table(name = "JWEB_WEB_APP")
-public class WebApp extends BaseEntity{
-    @Column(name="CODE")
+public class WebApp extends BaseEntity {
+    @Column(name = "CODE")
     private String code;
     @Column(name = "NAME")
     private String name;
-    @Column(name="VERSION")
+    @Column(name = "VERSION")
     private String version;
-    @Column(name="OWNER")
+    @Column(name = "OWNER")
     private String owner;
-    @Column(name="DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name="IS_DELETED")
+    @Column(name = "IS_DELETED")
     private Boolean isDeleted;
-    @Column(name="HOME_LINK")
+    @Column(name = "HOME_LINK")
     private String homeLink;
     @Transient
     private List<WebPage> webPages;

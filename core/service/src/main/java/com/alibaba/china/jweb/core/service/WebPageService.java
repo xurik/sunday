@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public interface WebPageService {
     List<WebPage> list(String webAppName);
+
     WebPage save(WebPage webPage);
-    WebPage renderPage(String webAppName,String url,Map parameter);
+
+    WebPage renderPage(String webAppName, String url, Map parameter);
 }

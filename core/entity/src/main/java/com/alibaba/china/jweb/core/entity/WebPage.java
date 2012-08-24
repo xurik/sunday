@@ -24,20 +24,20 @@ import java.util.List;
  */
 @Entity
 @Table(name = "JWEB_WEB_PAGE")
-public class WebPage extends BaseEntity{
-    @Column(name="CODE")
+public class WebPage extends BaseEntity {
+    @Column(name = "CODE")
     private String code;
     @Column(name = "NAME")
     private String name;
     @Column(name = "THEME")
     private String theme;
-    @Column(name="URI")
+    @Column(name = "URI")
     private String uri;
-    @Column(name="OWNER")
+    @Column(name = "OWNER")
     private String owner;
-    @Column(name="DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name="WEB_APP_CODE")
+    @Column(name = "WEB_APP_CODE")
     private String webAppCode;
     @Column(name = "WIDGET_ID")
     private Long widgetId;

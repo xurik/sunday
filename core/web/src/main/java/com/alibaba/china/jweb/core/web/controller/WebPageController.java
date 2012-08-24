@@ -27,65 +27,69 @@ import java.util.Map;
 @Controller
 public class WebPageController {
     @Autowired
-    private WebPageService webPageService ;
+    private WebPageService webPageService;
     @Autowired
     private TemplateService templateService;
 
     /**
      * 页面管理
+     *
      * @param webApp
      * @param webPage
      * @param modelMap
      * @return
      */
     @RequestMapping("/{webApp}/webpage/manage")
-    public String manage(@PathVariable String webApp,WebPage webPage,ModelMap modelMap){
-        modelMap.put("webApp",webApp);
+    public String manage(@PathVariable String webApp, WebPage webPage, ModelMap modelMap) {
+        modelMap.put("webApp", webApp);
         return "jweb/webpage/manage";
     }
 
     /**
      * 页面列表
+     *
      * @param webApp
      * @param modelMap
      */
     @RequestMapping("/{webApp}/webpage/list")
-    public void list(@PathVariable String webApp,ModelMap modelMap){
+    public void list(@PathVariable String webApp, ModelMap modelMap) {
         List<WebPage> list = webPageService.list(webApp);
-        modelMap.put("rows",list);
+        modelMap.put("rows", list);
     }
 
     /**
      * 保存页面
+     *
      * @param webApp
      * @param webPage
      * @param modelMap
      */
     @RequestMapping("/{webApp}/webpage/save")
-    public void save(@PathVariable String webApp,WebPage webPage,ModelMap modelMap){
-        Assert.notNull(webApp,"webApp can not null!");
-        Assert.notNull(webPage,"WebPage can not null!webApp:"+webApp);
+    public void save(@PathVariable String webApp, WebPage webPage, ModelMap modelMap) {
+        Assert.notNull(webApp, "webApp can not null!");
+        Assert.notNull(webPage, "WebPage can not null!webApp:" + webApp);
         webPage.setWebAppCode(webApp);
         webPageService.save(webPage);
-        modelMap.put("success",true);
+        modelMap.put("success", true);
     }
 
     /**
      * 渲染页面
+     *
      * @param webApp
      * @param request
      * @param modelMap
      * @return
      */
-    @RequestMapping(value = {"/{webApp}/**","/{webApp}/**/**","/{webApp}/**/**/**","/{webApp}/**/**/**/**"})
-    public String renderPage(@PathVariable String webApp,HttpServletRequest request,ModelMap modelMap){
+    @RequestMapping(value = {"/{webApp}/**", "/{webApp}/**/**", "/{webApp}/**/**/**", "/{webApp}/**/**/**/**"})
+    public String renderPage(@PathVariable String webApp, HttpServletRequest request, ModelMap modelMap) {
         String uri = request.getRequestURI();
-        uri = StringUtils.replace(uri,"/"+webApp+"/","");
+        uri = StringUtils.replace(uri, "/" + webApp + "/", "");
         VelocityContext velocityContext = new VelocityContext();
         Map pamaterMap = RequestUtil.getPamaterMap(request);
-        WebPage webPage = webPageService.renderPage(webApp,uri,pamaterMap);
-        if(webPage != null){
-            modelMap.put("j_webPage",webPage);
+        WebPage webPage = webPageService.renderPage(webApp, uri, pamaterMap);
+        if (webPage != null) {
+            modelMap.put("j_webPage", webPage);
         }
         return "jweb/webpage/render";
     }

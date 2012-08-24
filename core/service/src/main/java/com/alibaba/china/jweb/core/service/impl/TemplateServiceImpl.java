@@ -51,28 +51,30 @@ public class TemplateServiceImpl implements TemplateService {
     private final static Logger logger = LoggerFactory.getLogger(TemplateServiceImpl.class);
     @Autowired
     @Qualifier("repoPath")
-    private String              repoPath;
+    private String repoPath;
     @Autowired
     @Qualifier("vmCommonPath")
-    private String              vmCommonPath;
+    private String vmCommonPath;
     @Autowired
     @Qualifier("encoding")
-    private String              encoding;
+    private String encoding;
 
 
     public void initTemplate() throws ParseException, IOException {
         RuntimeServices runtimeServices = RuntimeSingleton.getRuntimeServices();
         Iterator<Component> iterator = componentDao.findAll().iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Component component = iterator.next();
             StringReader reader = new StringReader(component.getTemplate());
-            SimpleNode node = runtimeServices.parse(reader, component.getTemplate()+"/"+component.getCode());
+            SimpleNode node = runtimeServices.parse(reader, component.getTemplate() + "/" + component.getCode());
         }
     }
 
     /**
      * Velocity 属性初始化
+     *
      * @throws com.alibaba.china.jweb.core.exception.VelocityExcepiton
+     *
      */
     @PostConstruct
     public void init() throws VelocityExcepiton {
@@ -86,7 +88,7 @@ public class TemplateServiceImpl implements TemplateService {
             prop.setProperty("runtime.log.logsystem.log4j.logger.level", "INFO");
             prop.setProperty("input.encoding", encoding);
             prop.setProperty("output.encoding", encoding);
-            prop.setProperty("default.contentType", "text/html;charset="+encoding);
+            prop.setProperty("default.contentType", "text/html;charset=" + encoding);
             // 允许在循环中set null值
             prop.setProperty("directive.set.null.allowed", "true");
             Velocity.init(prop);
@@ -96,60 +98,64 @@ public class TemplateServiceImpl implements TemplateService {
             throw new VelocityExcepiton(message, e);
         }
     }
-    public String renderHtml(Node<Widget> node,Map parameter){
-        Map<Long,VelocityContext> contextMap = new HashMap<Long, VelocityContext>();
+
+    public String renderHtml(Node<Widget> node, Map parameter) {
+        Map<Long, VelocityContext> contextMap = new HashMap<Long, VelocityContext>();
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("j_parameter",parameter);
-        postorder(node,parameter,contextMap);
+        velocityContext.put("j_parameter", parameter);
+        postorder(node, parameter, contextMap);
         return null;
     }
-    private void postorder(Node<Widget> p,Map parameter,Map<Long,VelocityContext> contextMap) {  //后序排列
+
+    private void postorder(Node<Widget> p, Map parameter, Map<Long, VelocityContext> contextMap) {  //后序排列
         if (p != null) {
-            postorder(p.getLeft(),parameter,contextMap);
-            postorder(p.getRight(),parameter,contextMap);
-            visit(p,parameter,contextMap);
+            postorder(p.getLeft(), parameter, contextMap);
+            postorder(p.getRight(), parameter, contextMap);
+            visit(p, parameter, contextMap);
         }
     }
-    private void visit(Node<Widget> p,Map parameter,Map<Long,VelocityContext> contextMap) {
+
+    private void visit(Node<Widget> p, Map parameter, Map<Long, VelocityContext> contextMap) {
         Widget data = p.getData();
         Writer writer = new StringWriter();
-        try{
-            Template template = getTemplate(data.getType(),data.getComponentCode());
-            VelocityContext velocityContext = createVelocityContext(data.getParameters(),parameter);
+        try {
+            Template template = getTemplate(data.getType(), data.getComponentCode());
+            VelocityContext velocityContext = createVelocityContext(data.getParameters(), parameter);
             template.merge(velocityContext, writer);
             System.out.println(writer.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new VelocityException("page render error!id:" + data.getId(), e);
-        }finally {
+        } finally {
             WriterUtil.clossWriter(writer);
         }
         System.out.print(p.getData().getId() + " ");
     }
 
-    private VelocityContext createVelocityContext(String json,Map parameter){
-        Map<String,String> widgetParameter = JacksonUtil.toObject(json,new TypeReference<Map<String, String>>() {
+    private VelocityContext createVelocityContext(String json, Map parameter) {
+        Map<String, String> widgetParameter = JacksonUtil.toObject(json, new TypeReference<Map<String, String>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
         VelocityContext velocityContext = new VelocityContext(widgetParameter);
-        velocityContext.put("j_parameter",parameter);
+        velocityContext.put("j_parameter", parameter);
         return velocityContext;
     }
 
     /**
-     *  获取模版
+     * 获取模版
+     *
      * @param type
      * @param code
      * @return
      */
-    private Template getTemplate(String type,String code) throws ParseException {
+    private Template getTemplate(String type, String code) throws ParseException {
         Assert.notNull(type);
         Assert.notNull(code);
-        Component component =  componentDao.findByCode(code);
+        Component component = componentDao.findByCode(code);
         StringReader reader = new StringReader(component.getTemplate());
-        SimpleNode node = runtimeServices.parse(reader, component.getTemplate()+"/"+component.getCode());
+        SimpleNode node = runtimeServices.parse(reader, component.getTemplate() + "/" + component.getCode());
         Template template = new Template();
         template.setRuntimeServices(runtimeServices);
         template.setData(node);

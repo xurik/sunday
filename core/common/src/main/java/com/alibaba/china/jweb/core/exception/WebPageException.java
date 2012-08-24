@@ -8,19 +8,19 @@ package com.alibaba.china.jweb.core.exception;
  * Time: 5:10 PM
  */
 public class WebPageException extends RuntimeException {
-    public WebPageException(){
+    public WebPageException() {
         super();
     }
 
-    public WebPageException(String msg){
+    public WebPageException(String msg) {
         super(msg);
     }
 
-    public WebPageException(String msg, Throwable cause){
+    public WebPageException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public WebPageException(Throwable cause){
+    public WebPageException(Throwable cause) {
         super(cause);
     }
 }

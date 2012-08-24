@@ -71,7 +71,7 @@ public class WebPageServiceImpl implements WebPageService {
         return widgetService.add(widget);
     }
 
-    public WebPage renderPage(String webAppCode, String uri,Map parameter) {
+    public WebPage renderPage(String webAppCode, String uri, Map parameter) {
         Assert.notNull(webAppCode);
         Assert.notNull(uri);
         WebPage webPage = webPageDao.findByWebAppCodeAndUri(webAppCode, uri);
@@ -85,7 +85,7 @@ public class WebPageServiceImpl implements WebPageService {
         Widget widget = widgetDao.findOne(widgetId);
         Node<Widget> node = new Node<Widget>(widget);
         buildTree(node);
-        templateService.renderHtml(node,parameter);
+        templateService.renderHtml(node, parameter);
         return webPage;
     }
 
@@ -94,26 +94,26 @@ public class WebPageServiceImpl implements WebPageService {
         Widget data = node.getData();
         List<Long> children = WidgetUtil.getChildrenList(data.getElementChildren());
         List<Node<Widget>> nodeList = new ArrayList<Node<Widget>>();
-        for(Long id : children){
+        for (Long id : children) {
             Widget widget = widgetDao.findOne(id);
             Node<Widget> childNode = new Node<Widget>(widget);
-            if(node.getLeft() == null){
+            if (node.getLeft() == null) {
                 node.setLeft(childNode);
             }
             nodeList.add(childNode);
         }
         Node<Widget> tmp = node.getLeft();
-        for (Node<Widget> widgetNode : nodeList){
-            tmp = addRight(tmp,widgetNode);
+        for (Node<Widget> widgetNode : nodeList) {
+            tmp = addRight(tmp, widgetNode);
             buildTree(widgetNode);
         }
     }
 
-    private Node<Widget> addRight(Node<Widget> node,Node<Widget> right){
-        while (true){
-            if(node.getRight() != null && node.getData().getId().longValue() == right.getData().getId().longValue()){
-                addRight(node.getRight(),right);
-            }else{
+    private Node<Widget> addRight(Node<Widget> node, Node<Widget> right) {
+        while (true) {
+            if (node.getRight() != null && node.getData().getId().longValue() == right.getData().getId().longValue()) {
+                addRight(node.getRight(), right);
+            } else {
                 node.setRight(right);
                 return right;
             }

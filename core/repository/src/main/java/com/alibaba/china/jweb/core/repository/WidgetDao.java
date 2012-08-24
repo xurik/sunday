@@ -13,6 +13,6 @@ import java.util.List;
  * Date: 8/21/12
  * Time: 9:41 AM
  */
-public interface WidgetDao extends CrudRepository<Widget,Long> {
+public interface WidgetDao extends CrudRepository<Widget, Long> {
     List<Widget> findByIdIn(List<Long> ids);
 }

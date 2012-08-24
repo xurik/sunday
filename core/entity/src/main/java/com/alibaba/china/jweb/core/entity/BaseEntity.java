@@ -20,18 +20,18 @@ import java.util.Date;
  * Time: 10:18 AM
  */
 @MappedSuperclass
-public abstract class BaseEntity  implements Serializable {
+public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID")
+    @Column(name = "ID")
     protected Long id;
-    @Column(name="GMT_CREATE")
+    @Column(name = "GMT_CREATE")
     protected Date gmtCreate;
-    @Column(name="GMT_MODIFIED")
+    @Column(name = "GMT_MODIFIED")
     protected Date gmtModified;
-    @Column(name="CREATOR")
+    @Column(name = "CREATOR")
     protected String creator;
-    @Column(name="MODIFIER")
+    @Column(name = "MODIFIER")
     protected String modifier;
 
     public Long getId() {

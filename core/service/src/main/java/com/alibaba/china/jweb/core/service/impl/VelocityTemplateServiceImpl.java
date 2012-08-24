@@ -25,17 +25,16 @@ public class VelocityTemplateServiceImpl {
     private static final Logger logger = LoggerFactory.getLogger(VelocityTemplateServiceImpl.class);
     @Autowired
     @Qualifier("repoPath")
-    private String              repoPath;
+    private String repoPath;
     @Autowired
     @Qualifier("vmCommonPath")
-    private String              vmCommonPath;
+    private String vmCommonPath;
     @Autowired
     @Qualifier("encoding")
-    private String              encoding;
+    private String encoding;
 
 
-
-    private void buildHtml(Node<Widget> node,VelocityContext velocityContext){
+    private void buildHtml(Node<Widget> node, VelocityContext velocityContext) {
         postorder(node);
     }
 
@@ -46,6 +45,7 @@ public class VelocityTemplateServiceImpl {
             visit(p);
         }
     }
+
     private static void visit(Node<Widget> p) {
         System.out.print(p.getData().getId() + " ");
     }

@@ -14,13 +14,19 @@ import java.util.Map;
  * Time: 5:18 PM
  */
 public interface WidgetService {
-    Widget add(Long parentId,String componentCode);
+    Widget add(Long parentId, String componentCode);
+
     Widget add(Widget widget);
-    void move(Long id,Long from,Long to);
-    void remove(Long parentId,Long id);
-    Widget saveParameter(Long id,Map<String,String> param);
+
+    void move(Long id, Long from, Long to);
+
+    void remove(Long parentId, Long id);
+
+    Widget saveParameter(Long id, Map<String, String> param);
+
     WidgetParameterModel findPamameterById(Long id);
 
-    Widget addLoop(Long parentId,String loopName,String componentCode);
-    void removeLoop(Long parentId,String loopName,Long id);
+    Widget addLoop(Long parentId, String loopName, String componentCode);
+
+    void removeLoop(Long parentId, String loopName, Long id);
 }

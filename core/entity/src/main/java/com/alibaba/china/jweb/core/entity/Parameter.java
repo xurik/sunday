@@ -27,14 +27,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "JWEB_COMPONENT_PARAMETER")
-public class Parameter extends BaseEntity{
+public class Parameter extends BaseEntity {
     @Column(name = "CODE")
     private String code;
     @Column(name = "NAME")
     private String name;
     @Column(name = "XTYPE")
     private String type;
-    @Column(name="COMPONENT_CODE")
+    @Column(name = "COMPONENT_CODE")
     private String componentCode;
     @Column(name = "IS_LOOP")
     private Boolean isLoop;

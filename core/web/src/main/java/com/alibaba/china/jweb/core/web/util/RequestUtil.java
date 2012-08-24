@@ -15,9 +15,9 @@ import java.util.Map;
  * Time: 10:06 PM
  */
 public class RequestUtil {
-    public static Map getPamaterMap(HttpServletRequest request){
+    public static Map getPamaterMap(HttpServletRequest request) {
         Map parameters = new HashMap();
-        for (Enumeration<String> e = request.getParameterNames(); e.hasMoreElements();) {
+        for (Enumeration<String> e = request.getParameterNames(); e.hasMoreElements(); ) {
             String key = e.nextElement();
             String[] parameterValues = request.getParameterValues(key);
             String parameterValue = request.getParameter(key);

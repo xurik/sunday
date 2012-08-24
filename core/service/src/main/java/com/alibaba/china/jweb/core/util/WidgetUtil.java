@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class WidgetUtil {
 
-    public static Map<String,List<Long>> getLoopChildren(String src){
-        Map<String,List<Long>> childrenMap = JacksonUtil.toObject(src,new TypeReference<LinkedHashMap<String, List<Long>>>() {
+    public static Map<String, List<Long>> getLoopChildren(String src) {
+        Map<String, List<Long>> childrenMap = JacksonUtil.toObject(src, new TypeReference<LinkedHashMap<String, List<Long>>>() {
             @Override
             public Type getType() {
                 return super.getType();
@@ -27,8 +27,8 @@ public class WidgetUtil {
         return childrenMap;
     }
 
-    public static String removeLoopChildren(String src,String loopName,Long child){
-        Map<String,List<Long>> childrenMap =  JacksonUtil.toObject(src,new TypeReference<Map<String, List<Long>>>() {
+    public static String removeLoopChildren(String src, String loopName, Long child) {
+        Map<String, List<Long>> childrenMap = JacksonUtil.toObject(src, new TypeReference<Map<String, List<Long>>>() {
             @Override
             public Type getType() {
                 return super.getType();
@@ -40,38 +40,38 @@ public class WidgetUtil {
     }
 
 
-    public static String removeChildren(String src,Long child){
+    public static String removeChildren(String src, Long child) {
         List<Long> childList = getChildrenList(src);
-        if(childList.isEmpty()){
+        if (childList.isEmpty()) {
             return src;
         }
         Integer index = null;
         for (int i = 0; i < childList.size(); i++) {
-            if(childList.get(i).longValue() == child.longValue()){
+            if (childList.get(i).longValue() == child.longValue()) {
                 index = i;
                 break;
             }
         }
-        if(index != null){
+        if (index != null) {
             childList.remove(index);
         }
         return JacksonUtil.toJson(childList);
     }
 
-    public static String addChildren(String src,Long child){
+    public static String addChildren(String src, Long child) {
         List<Long> childList = getChildrenList(src);
         childList.add(child);
         return JacksonUtil.toJson(childList);
     }
 
-    public static List<Long> getChildrenList(String src){
-        List<Long> childList = JacksonUtil.toObject(src,new TypeReference<List<Long>>() {
+    public static List<Long> getChildrenList(String src) {
+        List<Long> childList = JacksonUtil.toObject(src, new TypeReference<List<Long>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
-        if(childList == null){
+        if (childList == null) {
             childList = new ArrayList<Long>();
         }
         return childList;

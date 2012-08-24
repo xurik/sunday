@@ -19,10 +19,13 @@ import java.util.List;
  */
 public interface ComponentDao extends PagingAndSortingRepository<Component, Long> {
     Component findByCode(String code);
+
     @Query("select u from Component u order by id desc ")
     List<Component> getAll();
+
     @Query("select u.type from Component u group by u.type order by u.type")
     List<String> getTypeList();
+
     @Query("select u from Component u where u.type = ?1 order by u.id")
     List<Component> findByType(String type);
 }

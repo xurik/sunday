@@ -13,6 +13,6 @@ import java.util.List;
  * Date: 8/21/12
  * Time: 12:07 AM
  */
-public interface ParameterDao extends CrudRepository<Parameter,Long>{
+public interface ParameterDao extends CrudRepository<Parameter, Long> {
     List<Parameter> findByComponentCodeOrderByIdDesc(String componentCode);
 }

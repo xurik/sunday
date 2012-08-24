@@ -23,9 +23,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "JWEB_WIDGET")
-public class Widget extends BaseEntity{
+public class Widget extends BaseEntity {
 
-    @Column(name="CODE")
+    @Column(name = "CODE")
     private String code;
     @Column(name = "NAME")
     private String name;
@@ -39,9 +39,9 @@ public class Widget extends BaseEntity{
     private String loopChildren;
     @Column(name = "NUM")
     private String num;
-    @Column(name="COMPONENT_CODE")
+    @Column(name = "COMPONENT_CODE")
     private String componentCode;
-    @Column(name="ELEMENT_CHILDREN")
+    @Column(name = "ELEMENT_CHILDREN")
     private String elementChildren;
 
     public String getCode() {

@@ -7,20 +7,20 @@ package com.alibaba.china.jweb.core.exception;
  * Date: 8/22/12
  * Time: 5:10 PM
  */
-public class WidgetException extends RuntimeException{
-    public WidgetException(){
+public class WidgetException extends RuntimeException {
+    public WidgetException() {
         super();
     }
 
-    public WidgetException(String msg){
+    public WidgetException(String msg) {
         super(msg);
     }
 
-    public WidgetException(String msg, Throwable cause){
+    public WidgetException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public WidgetException(Throwable cause){
+    public WidgetException(Throwable cause) {
         super(cause);
     }
 }

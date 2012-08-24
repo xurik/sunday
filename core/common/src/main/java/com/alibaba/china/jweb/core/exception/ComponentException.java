@@ -13,19 +13,19 @@ public class ComponentException extends RuntimeException {
      */
     private static final long serialVersionUID = 6946381182898887797L;
 
-    public ComponentException(){
+    public ComponentException() {
         super();
     }
 
-    public ComponentException(String msg){
+    public ComponentException(String msg) {
         super(msg);
     }
 
-    public ComponentException(String msg, Throwable cause){
+    public ComponentException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public ComponentException(Throwable cause){
+    public ComponentException(Throwable cause) {
         super(cause);
     }
 }

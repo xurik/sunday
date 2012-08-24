@@ -25,18 +25,18 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "JWEB_COMPONENT")
-public class Component extends BaseEntity{
-    @Column(name="CODE",unique = true)
+public class Component extends BaseEntity {
+    @Column(name = "CODE", unique = true)
     private String code;
-    @Column(name="NAME",unique = true)
+    @Column(name = "NAME", unique = true)
     private String name;
-    @Column(name="XTYPE")
+    @Column(name = "XTYPE")
     private String type;
-    @Column(name="DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name="THUMBNAIL")
+    @Column(name = "THUMBNAIL")
     private String thumbnail;
-    @Column(name="TEMPLATE")
+    @Column(name = "TEMPLATE")
     @Lob
     private String template;
     @Column(name = "RESOLVER")

@@ -7,29 +7,29 @@ package com.alibaba.china.jweb.core.exception;
 
 /**
  * 类JacksonException.java的实现描述：TODO 类实现描述
- * 
+ *
  * @author ri.xur Jul 30, 2012 4:36:56 PM
  */
 public class JacksonException extends RuntimeException {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 6946381182898887797L;
 
-    public JacksonException(){
+    public JacksonException() {
         super();
     }
 
-    public JacksonException(String msg){
+    public JacksonException(String msg) {
         super(msg);
     }
 
-    public JacksonException(String msg, Throwable cause){
+    public JacksonException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public JacksonException(Throwable cause){
+    public JacksonException(Throwable cause) {
         super(cause);
     }
 }

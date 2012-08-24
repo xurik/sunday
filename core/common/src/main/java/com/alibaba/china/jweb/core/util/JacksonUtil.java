@@ -20,19 +20,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 类JacksonUtil.java的实现描述：TODO 类实现描述
- * 
+ *
  * @author ri.xur Jul 16, 2012 5:04:10 PM
  */
 public class JacksonUtil {
 
-    private final static Logger logger       = LoggerFactory.getLogger(JacksonUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
+
     static {
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    private JacksonUtil(){
+    private JacksonUtil() {
     }
 
     public static ObjectMapper getObjectMapper() {
@@ -53,7 +54,7 @@ public class JacksonUtil {
 
     /**
      * 将对象转换成Json字符串
-     * 
+     *
      * @param value 非空
      * @return
      * @throws JacksonException

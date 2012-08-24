@@ -15,10 +15,12 @@ import java.util.Map;
 public class WidgetParameterModel {
     private List<Parameter> parameters;
     private List<String> loopList;
-    public WidgetParameterModel(List<Parameter> parameters,List<String> loopList){
+
+    public WidgetParameterModel(List<Parameter> parameters, List<String> loopList) {
         this.parameters = parameters;
         this.loopList = loopList;
     }
+
     public List<Parameter> getParameters() {
         return parameters;
     }

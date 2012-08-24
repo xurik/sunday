@@ -13,7 +13,8 @@ import java.util.List;
  * Date: 8/21/12
  * Time: 3:17 PM
  */
-public interface WebPageDao extends CrudRepository<WebPage,Long> {
+public interface WebPageDao extends CrudRepository<WebPage, Long> {
     List<WebPage> findByWebAppCodeOrderByIdDesc(String webAppCode);
-    WebPage findByWebAppCodeAndUri(String webAppCode,String uri);
+
+    WebPage findByWebAppCodeAndUri(String webAppCode, String uri);
 }

@@ -28,7 +28,8 @@ public class Table {
     private ComponentService componentService;
     @Autowired
     private WidgetService widgetService;
-    public void execute(Widget widget,String componentCode){
+
+    public void execute(Widget widget, String componentCode) {
         widget = widgetService.add(widget);
 
     }

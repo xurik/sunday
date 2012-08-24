@@ -13,5 +13,5 @@ import java.util.Map;
  * Time: 11:00 PM
  */
 public interface TemplateService {
-    String renderHtml(Node<Widget> node,Map parameter);
+    String renderHtml(Node<Widget> node, Map parameter);
 }
