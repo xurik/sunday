@@ -145,9 +145,7 @@
                 <prop key="file.resource.loader.cache">false</prop>
                 <prop key="file.resource.loader.modificationCheckInterval">1</prop>
                 <prop key="velocimacro.library.autoreload">true</prop>
-                <!--
-                <prop key="velocimacro.library"></prop>
-                -->
+                <prop key="velocimacro.library">jweb/macro/widgetconfig.vm,jweb/macro/widgetloop.vm</prop>
             </props>
         </property>
     </bean>

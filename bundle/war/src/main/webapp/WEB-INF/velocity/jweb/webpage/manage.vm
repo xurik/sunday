@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jqGrid/ui.jqgrid.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/codemirror.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/theme/night.css" type="text/css" media="screen" />
+
     <style>.CodeMirror {border: 1px solid black;}</style>
     <!--引入jquery&jgrid-->
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/jquery-1.7.2.min.js" ></script>
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/grid.locale-cn.js"></script>
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/jquery.jqGrid.min.js"></script>
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-ui/jquery-ui-1.8.20.custom.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-loadmask/jquery.loadmask.js"></script>
 
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/fbmodal/jquery.fbmodel.js"></script>
     <!--时间日期控件-->
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/date/WdatePicker.js"></script>
     <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-form-plugin.js"></script>

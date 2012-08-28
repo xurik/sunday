@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="GBK" />
+    <!--custom define css-->
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-ui/redmond/jquery-ui-1.8.20.custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jqGrid/ui.jqgrid.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/codemirror.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/codemirror/theme/night.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/layout/complex.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/ztree/ztree.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/jweb/sys.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-loadmask/jquery.loadmask.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/jweb/sys.css" type="text/css" media="screen" />
+
+    <!--引入jquery&jgrid-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/jquery-1.7.2.min.js" ></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-ui/jquery-ui-1.8.20.custom.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/layout/jquery.layout.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/ztree/jquery.ztree.all-3.3.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-loadmask/jquery.loadmask.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/contextmenu/jquery.contextmenu.js"></script>
+
+
+    <!--时间日期控件-->
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-form-plugin.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/codemirror.js"></script>
+    <script src="http://style.china.alibaba.com/app/risk/js/global/codemirror/mode/velocity/velocity.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-plugin.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/layout.js"></script>
+    <title>$!j_webPage.name</title>
+
+</head>
+<body>
+<input id="J_WEBPAGE_ID" value="$!J_WEB_PAGE.id" type="hidden"/>
+<div class="ui-layout-west" style="overflow: hidden;z-index: 10000;">
+
+    <div class="header">组建</div>
+
+    <div class="content">
+        <div class="zTreeDemoBackground left">
+            <ul id="componentTree" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="contextMenu" id="myMenu1">
+        <ul>
+            <li id="add"><img src="folder.png" /> Add</li>
+        </ul>
+    </div>
+</div>
+
+<div class="ui-layout-east">
+
+    <div class="header">Outer - East</div>
+    <div class="subhead">I'm a subheader</div>
+    <div class="content">
+        <div class="zTreeDemoBackground left">
+            <ul id="widgetTree" class="ztree"></ul>
+        </div>
+    </div>
+</div>
+
+<div class="ui-layout-north">
+    <div class="header">Web 快速开发工具</div>
+    <ul class="toolbar">
+        <li id="tbarToggleNorth" class="first"><span></span>Toggle NORTH</li>
+        <li id="tbarOpenSouth"><span></span>Open SOUTH</li>
+        <li id="tbarCloseSouth"><span></span>Close SOUTH</li>
+        <li id="tbarPinWest"><span></span>Pin/Unpin WEST</li>
+        <li id="tbarPinEast" class="last"><span></span>Pin/Unpin EAST</li>
+    </ul>
+</div>
+
+<div class="ui-layout-south">
+    <div class="header">Outer - South</div>
+    <div class="content">
+        <p>I only have a resizer/toggler when 'open'</p>
+    </div>
+</div>
+
+<div id="mainContent">
+    <!-- DIVs for the INNER LAYOUT -->
+    <div class="ui-layout-center">
+        <div id="ui-layout-content" class="ui-layout-content" style="height: 100%">
+            <div id="a" class="jweb-sys-container" >
+                <label class="jweb-sys-container">name:<input></label>
+                <label class="jweb-sys-container">name:<input></label>
+                <label class="jweb-sys-container">name:<input></label>
+                <label class="jweb-sys-container">name:<input></label>
+                <label class="jweb-sys-container">name:<input></label>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

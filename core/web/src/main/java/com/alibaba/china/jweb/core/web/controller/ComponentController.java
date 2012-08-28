@@ -11,6 +11,12 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * com.alibaba.china.jweb.core.web:
  * User: ri.xur
@@ -118,14 +124,19 @@ public class ComponentController {
      * @param modelMap
      */
     @RequestMapping("/saveParameter/{componentCode}")
-    public void saveParameter(Parameter parameter, @PathVariable String componentCode, ModelMap modelMap) {
+    public void saveParameter(Parameter parameter, @PathVariable String componentCode, HttpServletRequest request,ModelMap modelMap) {
+        String isLoop = request.getParameter("isLoop");
+        if(StringUtils.isNotBlank(isLoop)){
+            parameter.setLoop(Boolean.valueOf(isLoop));
+        }
         componentService.saveParameter(parameter, componentCode);
         modelMap.put("success", true);
     }
 
     @RequestMapping("/componentTree")
-    public void componentTree(ModelMap modelMap) {
-        modelMap.put("data", componentService.buildTree());
+    public void componentTree(Map map ,ModelMap modelMap) {
+        List<Map<String,String>> list = componentService.buildTree();
+        modelMap.put("data", list);
     }
 
 }

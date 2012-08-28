@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,9 @@ public class WebPageServiceImpl implements WebPageService {
                 throw new WidgetException("widget can not null!webPage uri : " + webPage.getCode());
             }
             webPage.setWidgetId(widget.getId());
+            webPage.setGmtCreate(new Date());
         }
+        webPage.setGmtModified(new Date());
         webPage = webPageDao.save(webPage);
         return webPage;
     }
@@ -85,7 +88,9 @@ public class WebPageServiceImpl implements WebPageService {
         Widget widget = widgetDao.findOne(widgetId);
         Node<Widget> node = new Node<Widget>(widget);
         buildTree(node);
-        templateService.renderHtml(node, parameter);
+        parameter.put("J_WEB_PAGE",webPage);
+        String html = templateService.renderHtml(node, parameter,webPage);
+        webPage.setHtml(html);
         return webPage;
     }
 
@@ -111,7 +116,9 @@ public class WebPageServiceImpl implements WebPageService {
 
     private Node<Widget> addRight(Node<Widget> node, Node<Widget> right) {
         while (true) {
-            if (node.getRight() != null && node.getData().getId().longValue() == right.getData().getId().longValue()) {
+            if(node.getData().getId().longValue() == right.getData().getId().longValue()){
+                return node;
+            }else if (node.getRight() != null) {
                 addRight(node.getRight(), right);
             } else {
                 node.setRight(right);

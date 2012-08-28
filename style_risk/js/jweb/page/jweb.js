@@ -8,6 +8,7 @@
 (function($){//防止$变量冲突
     $(document).ready(function(){//dom加载完后，再执行函数，防止js报错
         $("#main").jweb();
+        $( "#accordion" ).accordion();
         /*
         $(".jweb-container").droppable(
             {

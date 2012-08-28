@@ -4,6 +4,7 @@ import com.alibaba.china.jweb.core.entity.Parameter;
 import com.alibaba.china.jweb.core.entity.Widget;
 import com.alibaba.china.jweb.core.model.WidgetParameterModel;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +27,11 @@ public interface WidgetService {
 
     WidgetParameterModel findPamameterById(Long id);
 
-    Widget addLoop(Long parentId, String loopName, String componentCode);
+    Widget addLoop(Long parentId, String loopName, String componentCode,Map<String,String> map);
 
     void removeLoop(Long parentId, String loopName, Long id);
+
+    List<Map<String,?>> getLoopListById(Long id,String loopName);
+
+    List buildTree(Long parentId);
 }

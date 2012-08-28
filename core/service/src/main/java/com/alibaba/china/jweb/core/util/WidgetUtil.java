@@ -28,14 +28,32 @@ public class WidgetUtil {
     }
 
     public static String removeLoopChildren(String src, String loopName, Long child) {
-        Map<String, List<Long>> childrenMap = JacksonUtil.toObject(src, new TypeReference<Map<String, List<Long>>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
+        Map<String, List<Long>> childrenMap = getLoopChildren(src);
+        List<Long> list = childrenMap.get(loopName);
+        if (list == null)
+            return "";
+        Integer index = null;
+        for (int i = 0; i < list.size(); i++) {
+            if (child.longValue() == list.get(i).longValue()) {
+                index = i;
+                break;
             }
-        });
+        }
+        if (index != null) {
+            list.remove(index.intValue());
+        }
+        childrenMap.put(loopName, list);
+        return JacksonUtil.toJson(childrenMap);
+    }
 
-
+    public static String addLoopChildren(String src, String loopName, Long child) {
+        Map<String, List<Long>> childrenMap = getLoopChildren(src);
+        List<Long> list = childrenMap.get(loopName);
+        if (list == null) {
+            list = new ArrayList<Long>();
+        }
+        list.add(child);
+        childrenMap.put(loopName, list);
         return JacksonUtil.toJson(childrenMap);
     }
 
@@ -53,7 +71,7 @@ public class WidgetUtil {
             }
         }
         if (index != null) {
-            childList.remove(index);
+            childList.remove(index.intValue());
         }
         return JacksonUtil.toJson(childList);
     }

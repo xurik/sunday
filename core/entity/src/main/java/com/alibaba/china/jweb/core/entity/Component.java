@@ -41,6 +41,8 @@ public class Component extends BaseEntity {
     private String template;
     @Column(name = "RESOLVER")
     private String resolver;
+    @Column(name = "EXTEND")
+    private String extend;
     @Transient
     private List<Parameter> parameters;
 
@@ -98,6 +100,14 @@ public class Component extends BaseEntity {
 
     public void setResolver(String resolver) {
         this.resolver = resolver;
+    }
+
+    public String getExtend() {
+        return extend;
+    }
+
+    public void setExtend(String extend) {
+        this.extend = extend;
     }
 
     public List<Parameter> getParameters() {

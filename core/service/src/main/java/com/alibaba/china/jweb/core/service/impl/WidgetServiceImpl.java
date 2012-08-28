@@ -6,6 +6,7 @@ import com.alibaba.china.jweb.core.entity.Parameter;
 import com.alibaba.china.jweb.core.entity.Widget;
 import com.alibaba.china.jweb.core.exception.ComponentException;
 import com.alibaba.china.jweb.core.exception.WidgetException;
+import com.alibaba.china.jweb.core.model.LoopModel;
 import com.alibaba.china.jweb.core.model.WidgetParameterModel;
 import com.alibaba.china.jweb.core.repository.ComponentDao;
 import com.alibaba.china.jweb.core.repository.WidgetDao;
@@ -14,6 +15,7 @@ import com.alibaba.china.jweb.core.service.WidgetService;
 import com.alibaba.china.jweb.core.util.JacksonUtil;
 import com.alibaba.china.jweb.core.util.WidgetUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,10 @@ public class WidgetServiceImpl implements WidgetService {
         String children = parent.getElementChildren();
         children = WidgetUtil.addChildren(children, widget.getId());
         parent.setElementChildren(children);
+        if(widget.getId() == null){
+            widget.setGmtCreate(new Date());
+        }
+        widget.setGmtModified(new Date());
         widgetDao.save(parent);
         return widget;
     }
@@ -76,6 +82,10 @@ public class WidgetServiceImpl implements WidgetService {
             String widgetParameter = JacksonUtil.toJson(widgetParameters);
             widget.setParameters(widgetParameter);
         }
+        if(widget.getId() == null){
+            widget.setGmtCreate(new Date());
+        }
+        widget.setGmtModified(new Date());
         return widgetDao.save(widget);
     }
 
@@ -101,6 +111,8 @@ public class WidgetServiceImpl implements WidgetService {
 
         String toChildren = WidgetUtil.addChildren(toWidget.getElementChildren(), id);
         toWidget.setElementChildren(toChildren);
+        fromWidget.setGmtModified(new Date());
+        toWidget.setGmtModified(new Date());
         widgetDao.save(fromWidget);
         widgetDao.save(toWidget);
     }
@@ -110,6 +122,7 @@ public class WidgetServiceImpl implements WidgetService {
         Widget parent = widgetDao.findOne(parentId);
         String children = WidgetUtil.removeChildren(parent.getElementChildren(), id);
         parent.setElementChildren(children);
+        parent.setGmtModified(new Date());
         widgetDao.save(parent);
     }
 
@@ -122,6 +135,10 @@ public class WidgetServiceImpl implements WidgetService {
         }
         String parameters = JacksonUtil.toJson(param);
         widget.setParameters(parameters);
+        if(widget.getId() == null){
+            widget.setGmtCreate(new Date());
+        }
+        widget.setGmtModified(new Date());
         return widgetDao.save(widget);
     }
 
@@ -145,30 +162,80 @@ public class WidgetServiceImpl implements WidgetService {
         if (parameterList == null || parameterList.isEmpty()) {
             return null;
         }
-        List<String> loopName = new ArrayList<String>();
+        List<LoopModel> loopList = new ArrayList<LoopModel>();
         List<Parameter> parameters = new ArrayList<Parameter>();
         for (Parameter parameter : parameterList) {
-            if (!parameter.getLoop()) {
+            if (parameter.getLoop() == null || !parameter.getLoop()) {
                 String defaultValue = paramMap.get(parameter.getName());
                 if (StringUtils.isNotBlank(defaultValue)) {
                     parameter.setDefaultValue(defaultValue);
                 }
                 parameters.add(parameter);
             } else {
-                loopName.add(parameter.getType());
+                LoopModel loopModel = new LoopModel();
+                loopModel.setCode(parameter.getCode());
+                loopModel.setName(parameter.getName());
+                loopModel.setType(parameter.getType());
+                List<Parameter> p = componentService.getParametersByCode(parameter.getCode());
+                if(p != null && p.size() > 0){
+                    loopModel.setParameters(p);
+                }
+                loopList.add(loopModel);
             }
         }
-        return new WidgetParameterModel(parameters, loopName);
+        return new WidgetParameterModel(parameters, loopList);
+    }
+
+    public List<Map<String,?>> getLoopListById(Long id,String loopName){
+        Widget widget = widgetDao.findOne(id);
+        String loopJson = widget.getLoopChildren();
+        List<Map<String,?>> result = new ArrayList<Map<String,?>>();
+        Map<String,List<Long>> loopMap = new HashMap<String, List<Long>>();
+
+        if(StringUtils.isNotBlank(loopJson)){
+            loopMap = JacksonUtil.toObject(loopJson,new TypeReference<Map<String,List<Long>>>() {
+                @Override
+                public Type getType() {
+                    return super.getType();
+                }
+            });
+        }
+        if(loopMap == null){
+            return result;
+        }
+        List<Long> loopIdList = loopMap.get(loopName);
+        if(loopIdList == null || loopIdList.isEmpty()){
+            return result;
+        }
+        for(Long wid : loopIdList){
+            Widget w = widgetDao.findOne(wid);
+            String ps = w.getParameters();
+            if(StringUtils.isBlank(ps)){
+                continue;
+            }
+            result.add(JacksonUtil.toObject(ps,new TypeReference<Map<String, ?>>() {
+                @Override
+                public Type getType() {
+                    return super.getType();
+                }
+            }));
+        }
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Widget addLoop(Long parentId, String loopName, String componentCode) {
+    public Widget addLoop(Long parentId, String loopName, String componentCode,Map<String,String> map) {
         Assert.notNull(parentId);
         Assert.notNull(loopName);
         Assert.notNull(componentCode);
         Widget widget = new Widget();
         widget.setComponentCode(componentCode);
         widget = add(widget);
+        map.put("id",String.valueOf(widget.getId()));
+        String parameters = JacksonUtil.toJson(map);
+        widget.setParameters(parameters);
+        widget.setGmtModified(new Date());
+        widgetDao.save(widget);
         Widget parent = widgetDao.findOne(parentId);
         String loopChildren = parent.getLoopChildren();
         Map<String, List<Long>> loopMap = JacksonUtil.toObject(loopChildren, new TypeReference<LinkedHashMap<String, List<Long>>>() {
@@ -186,17 +253,45 @@ public class WidgetServiceImpl implements WidgetService {
         }
         loopList.add(widget.getId());
         loopMap.put(loopName, loopList);
-        loopChildren = JacksonUtil.toJson(loopName);
+        loopChildren = JacksonUtil.toJson(loopMap);
         parent.setLoopChildren(loopChildren);
+        parent.setGmtModified(new Date());
         widgetDao.save(parent);
         return widget;
     }
 
     public void removeLoop(Long parentId, String loopName, Long id) {
         Widget parent = widgetDao.findOne(parentId);
-        String children = WidgetUtil.removeChildren(parent.getLoopChildren(), id);
+        String children = WidgetUtil.removeLoopChildren(parent.getLoopChildren(), loopName,id);
         parent.setLoopChildren(children);
+        parent.setGmtModified(new Date());
         widgetDao.save(parent);
     }
 
+    public List buildTree(Long parentId){
+        Widget widget = widgetDao.findOne(parentId);
+        if(widget == null){
+            throw new WidgetException("can not find widget!id:"+parentId);
+        }
+        List result = new ArrayList();
+        String childrenJson = widget.getElementChildren();
+        List<Long> childrenList = WidgetUtil.getChildrenList(childrenJson);
+        for(Long id : childrenList){
+            Widget child = widgetDao.findOne(id);
+            if(child == null){
+                continue;
+            }
+            Map map = new HashMap();
+            map.put("id",id);
+            String name = "";
+            if(StringUtils.isNotBlank(child.getName())){
+                name = child.getName();
+            }
+            map.put("name",name+"("+child.getType()+")");
+            map.put("pId",parentId);
+            map.put("isParent","true");
+            result.add(map);
+        }
+        return result;
+    }
 }

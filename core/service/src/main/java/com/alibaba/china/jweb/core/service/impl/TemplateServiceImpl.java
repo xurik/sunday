@@ -1,9 +1,12 @@
 package com.alibaba.china.jweb.core.service.impl;
 
 import com.alibaba.china.jweb.core.entity.Component;
+import com.alibaba.china.jweb.core.entity.WebPage;
 import com.alibaba.china.jweb.core.entity.Widget;
 import com.alibaba.china.jweb.core.exception.VelocityExcepiton;
+import com.alibaba.china.jweb.core.exception.WidgetException;
 import com.alibaba.china.jweb.core.repository.ComponentDao;
+import com.alibaba.china.jweb.core.repository.WidgetDao;
 import com.alibaba.china.jweb.core.service.ComponentService;
 import com.alibaba.china.jweb.core.service.TemplateService;
 import com.alibaba.china.jweb.core.tree.Node;
@@ -46,6 +49,10 @@ public class TemplateServiceImpl implements TemplateService {
     private static final RuntimeServices runtimeServices = RuntimeSingleton.getRuntimeServices();
     @Autowired
     private ComponentService componentService;
+
+    @Autowired
+    private WidgetDao widgetDao;
+
     @Autowired
     private ComponentDao componentDao;
     private final static Logger logger = LoggerFactory.getLogger(TemplateServiceImpl.class);
@@ -65,7 +72,11 @@ public class TemplateServiceImpl implements TemplateService {
         Iterator<Component> iterator = componentDao.findAll().iterator();
         while (iterator.hasNext()) {
             Component component = iterator.next();
-            StringReader reader = new StringReader(component.getTemplate());
+            String template = component.getTemplate();
+            if(template == null){
+                template = "";
+            }
+            StringReader reader = new StringReader(template);
             SimpleNode node = runtimeServices.parse(reader, component.getTemplate() + "/" + component.getCode());
         }
     }
@@ -99,15 +110,20 @@ public class TemplateServiceImpl implements TemplateService {
         }
     }
 
-    public String renderHtml(Node<Widget> node, Map parameter) {
-        Map<Long, VelocityContext> contextMap = new HashMap<Long, VelocityContext>();
+    public String renderHtml(Node<Widget> node, Map parameter,WebPage webPage) {
+        Map<Long, List<String>> contextMap = new HashMap<Long, List<String>>();
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("j_parameter", parameter);
         postorder(node, parameter, contextMap);
-        return null;
+        List<String> list = contextMap.get(webPage.getId());
+        String str = "";
+        if(list != null && !list.isEmpty()){
+            str = (String)list.get(0);
+        }
+        return str;
     }
 
-    private void postorder(Node<Widget> p, Map parameter, Map<Long, VelocityContext> contextMap) {  //后序排列
+    private void postorder(Node<Widget> p, Map parameter, Map<Long, List<String>> contextMap) {  //后序排列
         if (p != null) {
             postorder(p.getLeft(), parameter, contextMap);
             postorder(p.getRight(), parameter, contextMap);
@@ -115,31 +131,106 @@ public class TemplateServiceImpl implements TemplateService {
         }
     }
 
-    private void visit(Node<Widget> p, Map parameter, Map<Long, VelocityContext> contextMap) {
+    private void visit(Node<Widget> p, Map parameter, Map<Long, List<String>> contextMap) {
         Widget data = p.getData();
         Writer writer = new StringWriter();
         try {
             Template template = getTemplate(data.getType(), data.getComponentCode());
-            VelocityContext velocityContext = createVelocityContext(data.getParameters(), parameter);
+
+            VelocityContext velocityContext = createVelocityContext(data, parameter);
+
+            if(p.getLeft() != null){
+
+                List<String> children = contextMap.get(p.getLeft().getData().getId());
+                if(children != null && children.size() > 0){
+                    List<String> tmp = new ArrayList<String>();
+                    for(int i=children.size()-1;i>=0;i--){
+                        tmp.add(children.get(i));
+                    }
+                    velocityContext.put("widgets",tmp);
+                }
+            }
+            if(StringUtils.isNotBlank(data.getLoopChildren())){
+                renderLoop(data.getLoopChildren(),parameter,velocityContext);
+            }
             template.merge(velocityContext, writer);
-            System.out.println(writer.toString());
+            List<String> widgetList = new ArrayList<String>();
+            if(p.getRight() != null){
+                widgetList = contextMap.get(p.getRight().getData().getId());
+            }
+            widgetList.add(writer.toString());
+            contextMap.put(data.getId(),widgetList);
+
         } catch (Exception e) {
             throw new VelocityException("page render error!id:" + data.getId(), e);
         } finally {
             WriterUtil.clossWriter(writer);
         }
-        System.out.print(p.getData().getId() + " ");
+        System.out.println(writer.toString());
     }
 
-    private VelocityContext createVelocityContext(String json, Map parameter) {
-        Map<String, String> widgetParameter = JacksonUtil.toObject(json, new TypeReference<Map<String, String>>() {
+    private void renderLoop(String json,Map parameter, VelocityContext velocityContext){
+        Map<String,List<Long>> loopMap = JacksonUtil.toObject(json, new TypeReference<Map<String, List<Long>>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        if(loopMap == null || loopMap.isEmpty()){
+            return;
+        }
+        for(Map.Entry<String,List<Long>> entry : loopMap.entrySet()){
+            String key = entry.getKey();
+            List<Long> value = entry.getValue();
+            if(StringUtils.isNotBlank(key) && value != null){
+                for(Long id : value){
+                    Widget data = widgetDao.findOne(id);
+                    if(data == null){
+                        logger.error("can not find widget!id="+id);
+                        continue;
+                    }
+
+                    Component component = componentService.getByCode(data.getComponentCode());
+                    Map<String,?> parameters = JacksonUtil.toObject(data.getParameters(),new TypeReference<Map<String, ?>>() {
+                        @Override
+                        public Type getType() {
+                            return super.getType();
+                        }
+                    });
+                    Writer writer = new StringWriter();
+                    VelocityContext context = createVelocityContext(data,parameter);
+                    try{
+                        Template template = getTemplate(data.getType(), data.getComponentCode());
+                        template.merge(velocityContext, writer);
+
+                        List<String> loops = new ArrayList<String>();
+                        if(velocityContext.get(key) != null){
+                            loops = (List<String>)velocityContext.get(key);
+                        }
+                        loops.add(writer.toString());
+                        velocityContext.put(key,loops);
+                    }catch (Exception e){
+                        throw new VelocityException("page render error!id:" + data.getId(), e);
+                    }finally {
+                        WriterUtil.clossWriter(writer);
+                    }
+
+                }
+            }
+        }
+    }
+
+    private VelocityContext createVelocityContext(Widget data, Map parameter) {
+        Map<String, String> widgetParameter = JacksonUtil.toObject(data.getParameters(), new TypeReference<Map<String, String>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
         VelocityContext velocityContext = new VelocityContext(widgetParameter);
-        velocityContext.put("j_parameter", parameter);
+        velocityContext.put("J_PARAMETER",parameter);
+        velocityContext.put("J_WEB_PAGE",parameter.get("J_WEB_PAGE"));
+        velocityContext.put("J_WIDGET_ID",data.getId());
         return velocityContext;
     }
 
@@ -154,7 +245,11 @@ public class TemplateServiceImpl implements TemplateService {
         Assert.notNull(type);
         Assert.notNull(code);
         Component component = componentDao.findByCode(code);
-        StringReader reader = new StringReader(component.getTemplate());
+        String vt = component.getTemplate();
+        if(vt == null){
+            vt = "";
+        }
+        StringReader reader = new StringReader(vt);
         SimpleNode node = runtimeServices.parse(reader, component.getTemplate() + "/" + component.getCode());
         Template template = new Template();
         template.setRuntimeServices(runtimeServices);

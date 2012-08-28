@@ -1,0 +1,31 @@
+#macro( text $id $defaultValue $values)
+<input name="$!id" type="text"  value="$!defaultValue" class="FormElement ui-widget-content ui-corner-all"/>
+#end
+#macro( textarea $id $defaultValue $values)
+	<textarea name="$!id" rows="20" cols="40">$defaultValue</textarea>
+#end
+#macro( radio $id $defaultValue $values)
+	#foreach($value in $stringUtils.split($values,","))
+    <label>
+		${velocityUtil.getBySplitIndex($value,":",1)}:
+		<input name="$!id" type="radio" value="${velocityUtil.getBySplitIndex($value,":",0)}" #if(${stringUtils.equals(${velocityUtil.getBySplitIndex($value,":",0)}, $defaultValue)}) checked #end/>
+	</label>
+    #end
+#end
+#macro( checkbox $id $defaultValue $values)
+	#foreach($value in $stringUtils.split($values,","))
+    <label>
+		${velocityUtil.getBySplitIndex($value,":",1)}:
+		<input name="$!id" type="checkbox" value="${velocityUtil.getBySplitIndex($value,":",0)}" #if(${stringUtils.equals(${velocityUtil.getBySplitIndex($value,":",0)}, $defaultValue)}) checked #end/>
+	</label>
+    #end
+#end
+#macro( select $id $defaultValue $values)
+	<select  name="$!id">
+		#foreach($value in $stringUtils.split($values,","))
+			<option value="${velocityUtil.getBySplitIndex($value,":",0)}" #if(${stringUtils.equals(${velocityUtil.getBySplitIndex($value,":",0)}, $defaultValue)}) selected  #end>
+				${velocityUtil.getBySplitIndex($value,":",1)}
+            </option>
+        #end
+    </select>
+#end

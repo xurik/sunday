@@ -89,8 +89,9 @@ public class WebPageController {
         Map pamaterMap = RequestUtil.getPamaterMap(request);
         WebPage webPage = webPageService.renderPage(webApp, uri, pamaterMap);
         if (webPage != null) {
-            modelMap.put("j_webPage", webPage);
+            modelMap.put("J_WEB_PAGE", webPage);
         }
+        modelMap.put("widget",webPage.getHtml());
         return "jweb/webpage/render";
     }
 }

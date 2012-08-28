@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=GBK" />
+    <title>Viual Component Mgmt</title>
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-ui/redmond/jquery-ui-1.8.20.custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jqGrid/ui.jqgrid.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/behavior/global/merge.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://style.china.alibaba.com/app/risk/css/global/jquery-loadmask/jquery.loadmask.css" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/jquery-1.7.2.min.js" ></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-ui/jquery-ui-1.8.20.custom.min.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jquery-loadmask/jquery.loadmask.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/global/jquery/plugin/jqGrid/jquery.jqGrid.min.js"></script>
+
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/jweb-form-plugin.js"></script>
+    <script type="text/javascript" src="http://style.china.alibaba.com/app/risk/js/jweb/page/widget.js"></script>
+</head>
+<body >
+<input id="componentCode" type="hidden" />
+<div>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">基本属性</a></li>
+            #foreach($loop in $loops)
+                <li><a href="#tabs-${loop.code}">$loop.name</a></li>
+            #end
+        </ul>
+        #foreach($loop in $loops)
+            <div id="tabs-${loop.code}" style="padding: 0px;">
+                #widgetconfig($loop)
+            </div>
+        #end
+        <div id="tabs-1"  style="padding:1;width: 1050px; height: auto; z-index: 950; overflow: hidden; display: block;"  class="ui-jqdialog-content ui-widget-content">
+            <form id="widgetForm" action="/jweb/widget/saveParameter/${id}.json" method="post" style="width: 100%; overflow: auto; position: relative; height: auto;" class="FormGrid" name="FormPost">
+                $!csrfToken.hiddenField
+                <table cellspacing="0" cellpadding="0" border="0" class="EditTable">
+                    <tbody>
+                    <tr style="display: none" id="FormError">
+                        <td colspan="2" class="ui-state-error"></td>
+                    </tr>
+                    <tr class="tinfo" style="display: none">
+                        <td colspan="2" class="topinfo"></td>
+                    </tr>
+                    <tr class="FormData">
+                        <td  style="width:120px;">ID:</td>
+                        <td  class="DataTD"> $id </td>
+                    </tr>
+                        #foreach($item in $parameters)
+                            #if($!item.name && !$!item.loop)
+                            <tr class="FormData">
+                                <td  style="width:120px;">$item.name:</td>
+                                <td  class="DataTD">
+                                    #if($item.type=="textarea")
+                                        #textarea("$!item.code" "$!item.defaultValue" "$!item.values")
+                                    #elseif($item.type=="radio")
+                                        #radio("$!item.code" "$!item.defaultValue" "$!item.values")
+                                    #elseif($item.type=="checkbox")
+                                        #checkbox("$!item.code" "$!item.defaultValue" "$!item.values")
+                                    #elseif($item.type=="select")
+                                        #select("$!item.code" "$!item.defaultValue" "$!item.values")
+                                    #else
+                                        #text("$!item.code" "$!item.defaultValue" "$!item.values")
+                                    #end
+                                </td>
+                            </tr>
+                            #else
+                            <input name="$item.code" type="hidden"  value="$!item.defaultValue" />
+                            #end
+                        #end
+                    <tr>
+                        <td colspan="2"><hr style="margin: 1px" class="ui-widget-content"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" 	id="submitData" href="javascript:void(0)">提交<span class="ui-icon ui-icon-disk"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

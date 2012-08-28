@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class WidgetParameterModel {
     private List<Parameter> parameters;
-    private List<String> loopList;
+    private List<LoopModel> loopList;
 
-    public WidgetParameterModel(List<Parameter> parameters, List<String> loopList) {
+    public WidgetParameterModel(List<Parameter> parameters, List<LoopModel> loopList) {
         this.parameters = parameters;
         this.loopList = loopList;
     }
@@ -29,11 +29,11 @@ public class WidgetParameterModel {
         this.parameters = parameters;
     }
 
-    public List<String> getLoopList() {
+    public List<LoopModel> getLoopList() {
         return loopList;
     }
 
-    public void setLoopList(List<String> loopList) {
+    public void setLoopList(List<LoopModel> loopList) {
         this.loopList = loopList;
     }
 }

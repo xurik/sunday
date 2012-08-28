@@ -1,0 +1,61 @@
+#macro(widgetconfig $loop)
+<div id="$loop.code" style="padding:0">
+<table id="${loop.code}-editgrid" ></table>
+<div id="${loop.code}-pagered" ></div>
+<script >
+(function($){//防止$变量冲突
+	$(document).ready(function(){//dom加载完后，再执行函数，防止js报错
+	jQuery.jgrid.no_legacy_api = true;
+	jQuery.jgrid.useJSON = true;
+		jQuery("#${loop.code}-editgrid").jqGrid({
+			mtype:'POST',
+        	datatype: "json",
+			data : {rows:[{id:100},{id:200},{id:300}]},
+           	colModel:[
+				{name:'id',name:'id',hidden:true}
+				#foreach($item in $loop.parameters)
+					#if($!item.name)
+					  ,{name:'$!item.code',
+					    index:'$!item.code',
+						label:'$!item.name',
+						editable:true
+						#if($!item.type == 'select' || $!item.type == 'checkbox')
+                		,edittype:'$!item.type'
+						,editoptions:{
+                            value:{
+                                #foreach($value in $stringUtils.split($item.valueList,","))
+                                    ${velocityUtil.getBySplitIndex($value,":",0)}:"${velocityUtil.getBySplitIndex($value,":",1)}",
+                                #end
+                            }
+                        }
+						#elseif($!item.type == 'textarea')
+						,edittype:'$!item.type'
+						,editoptions:{rows:20,cols:40}
+						#elseif($!item.type == 'radio' )
+						,edittype:'select'
+						,editoptions:{
+							value:{
+            							#foreach($value in $stringUtils.split($item.values,","))
+            							${velocityUtil.getBySplitIndex($value,":",0)}:"${velocityUtil.getBySplitIndex($value,":",1)}",
+            							#end
+									}
+						}
+						#end
+						}
+            		#end
+				#end
+           	],
+			width:'850',
+			rowNum:200,
+			viewrecords: true,
+			postData:{init:true},
+			pager: '#${loop.code}-pagered',
+			editurl:'/jweb/widget/loop/save/${id}/${loop.code}/${loop.type}.json',
+			url : "/jweb/widget/loop/list/${id}/${loop.code}.json",
+			 jsonReader:{repeatitems:false,id:"id"}
+        }).jqGrid('navGrid','#${loop.code}-pagered',{edit:true,add:true,del:true});
+    });
+})(jQuery);
+</script>
+</div>
+#end

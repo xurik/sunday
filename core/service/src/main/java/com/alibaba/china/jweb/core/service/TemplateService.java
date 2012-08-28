@@ -1,5 +1,6 @@
 package com.alibaba.china.jweb.core.service;
 
+import com.alibaba.china.jweb.core.entity.WebPage;
 import com.alibaba.china.jweb.core.entity.Widget;
 import com.alibaba.china.jweb.core.tree.Node;
 
@@ -13,5 +14,5 @@ import java.util.Map;
  * Time: 11:00 PM
  */
 public interface TemplateService {
-    String renderHtml(Node<Widget> node, Map parameter);
+    String renderHtml(Node<Widget> node, Map parameter,WebPage webPage);
 }

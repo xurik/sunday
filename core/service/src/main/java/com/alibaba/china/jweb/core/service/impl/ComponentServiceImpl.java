@@ -41,6 +41,7 @@ public class ComponentServiceImpl implements ComponentService {
         Assert.notNull(component);
         if (component.getId() == null)
             component.setGmtCreate(new Date());
+        component.setGmtModified(new Date());
         return componentDao.save(component);
     }
 
@@ -57,7 +58,23 @@ public class ComponentServiceImpl implements ComponentService {
         if (component == null) {
             return (List<Parameter>) CollectionUtils.EMPTY_COLLECTION;
         }
-        return parameterDao.findByComponentCodeOrderByIdDesc(code);
+        return getParametersByCode(component, new HashMap<String, Parameter>());
+    }
+
+    private List<Parameter> getParametersByCode(Component component,Map<String,Parameter> map){
+        List<Parameter> parameters = parameterDao.findByComponentCodeOrderByIdDesc(component.getCode());
+        if(parameters != null && parameters.size()>0){
+            for(Parameter parameter : parameters){
+                if(!map.containsKey(parameter.getCode())){
+                    map.put(parameter.getCode(),parameter);
+                }
+            }
+        }
+        if(StringUtils.isNotBlank(component.getExtend())){
+            Component parent = componentDao.findByCode(component.getExtend());
+            getParametersByCode(parent,map);
+        }
+        return new ArrayList<Parameter>(map.values());
     }
 
     public Parameter saveParameter(Parameter parameter, String componentCode) {
@@ -66,6 +83,10 @@ public class ComponentServiceImpl implements ComponentService {
         Component component = componentDao.findByCode(componentCode);
         Assert.notNull(component);
         parameter.setComponentCode(component.getCode());
+        if(parameter.getId() == null){
+            parameter.setGmtCreate(new Date());
+        }
+        parameter.setGmtModified(new Date());
         return parameterDao.save(parameter);
     }
 
@@ -77,6 +98,7 @@ public class ComponentServiceImpl implements ComponentService {
         }
         component.setResolver(resolver);
         component.setTemplate(template);
+        component.setGmtModified(new Date());
         return componentDao.save(component);
     }
 
@@ -85,16 +107,14 @@ public class ComponentServiceImpl implements ComponentService {
         List tree = new ArrayList();
         for (String type : typies) {
             Map typeMap = new HashMap();
-            typeMap.put("data", type);
+            typeMap.put("name",type);
             List children = new ArrayList();
             List<Component> list = componentDao.findByType(type);
             for (Component child : list) {
                 Map childMap = new HashMap();
                 Map attr = new HashMap();
-                childMap.put("data", child.getName());
-                attr.put("id", child.getId());
-                attr.put("code", child.getCode());
-                childMap.put("attr", attr);
+                childMap.put("id",child.getCode());
+                childMap.put("name",child.getName());
                 children.add(childMap);
             }
             typeMap.put("children", children);
