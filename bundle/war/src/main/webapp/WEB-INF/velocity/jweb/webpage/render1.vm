@@ -63,7 +63,10 @@
 <div class="ui-layout-east">
 
     <div class="header">Outer - East</div>
-    <div class="subhead">I'm a subheader</div>
+    <div class="subhead">
+        <a id="J_WIDGET_DELETE" href="javascript:void(0)">É¾³ý</a>
+        <a id="J_WIDGET_EDIT" href="javascript:void(0)">±à¼­</a>
+    </div>
     <div class="content">
         <div class="zTreeDemoBackground left">
             <ul id="widgetTree" class="ztree"></ul>
@@ -93,13 +96,11 @@
     <!-- DIVs for the INNER LAYOUT -->
     <div class="ui-layout-center">
         <div id="ui-layout-content" class="ui-layout-content" style="height: 100%">
-            <div id="a" class="jweb-sys-container" >
-                <label class="jweb-sys-container">name:<input></label>
-                <label class="jweb-sys-container">name:<input></label>
-                <label class="jweb-sys-container">name:<input></label>
-                <label class="jweb-sys-container">name:<input></label>
-                <label class="jweb-sys-container">name:<input></label>
-            </div>
+            #if($!widgets)
+            	#foreach($widget in $!widgets)
+                $widget
+            #end
+            #end
         </div>
     </div>
 </div>

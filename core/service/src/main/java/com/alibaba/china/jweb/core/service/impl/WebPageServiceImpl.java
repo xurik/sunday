@@ -88,7 +88,8 @@ public class WebPageServiceImpl implements WebPageService {
         Widget widget = widgetDao.findOne(widgetId);
         Node<Widget> node = new Node<Widget>(widget);
         buildTree(node);
-        parameter.put("J_WEB_PAGE",webPage);
+        parameter.put("j_web_page",webPage);
+
         String html = templateService.renderHtml(node, parameter,webPage);
         webPage.setHtml(html);
         return webPage;

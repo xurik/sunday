@@ -12,7 +12,6 @@
         $("#savePage").click(function(){
             var param = $('#webpage_form').serializeJSON();
             $.post('../saveTemplate/'+$("#componentCode").val()+".json",param,function(data) {
-                alert(data.success);
             });
         });
 

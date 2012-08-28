@@ -38,7 +38,7 @@ public class Widget extends BaseEntity {
     @Column(name = "LOOP_CHILDREN")
     private String loopChildren;
     @Column(name = "NUM")
-    private String num;
+    private Integer num;
     @Column(name = "COMPONENT_CODE")
     private String componentCode;
     @Column(name = "ELEMENT_CHILDREN")
@@ -92,11 +92,11 @@ public class Widget extends BaseEntity {
         this.loopChildren = loopChildren;
     }
 
-    public String getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(String num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 

@@ -2,6 +2,7 @@ package com.alibaba.china.jweb.core.web.controller;
 
 import com.alibaba.china.jweb.core.entity.Widget;
 import com.alibaba.china.jweb.core.model.WidgetParameterModel;
+import com.alibaba.china.jweb.core.service.WebPageService;
 import com.alibaba.china.jweb.core.service.WidgetService;
 import com.alibaba.china.jweb.core.web.util.RequestUtil;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +29,8 @@ import java.util.Map;
 public class WidgetController {
     @Autowired
     private WidgetService widgetService;
+    @Autowired
+    private WebPageService webPageService;
 
     @RequestMapping("/widget/add/{parentId}/{componentCode}")
     public void add(@PathVariable Long parentId, @PathVariable String componentCode, ModelMap modelMap) {
@@ -56,12 +59,12 @@ public class WidgetController {
         }else if(StringUtils.equals("edit",oper)){
             String id = request.getParameter("id");
             if(StringUtils.isNotBlank(id)){
-                widgetService.saveParameter(Long.valueOf(id),map);
+                widgetService.saveParameter(Long.valueOf(id), map);
             }
         }else if(StringUtils.equals("del",oper)){
             String id = request.getParameter("id");
             if(StringUtils.isNotBlank(id)){
-                widgetService.removeLoop(parentId,loopName,Long.valueOf(id));
+                widgetService.removeLoop(parentId, loopName, Long.valueOf(id));
             }
         }
 
@@ -98,12 +101,33 @@ public class WidgetController {
     @RequestMapping("/widget/buildtree/{parentId}")
     public void buildtree(@PathVariable Long parentId, HttpServletRequest request,ModelMap modelMap) {
         String id = request.getParameter("id");
+        boolean isRoot = true;
         if(StringUtils.isNotBlank(id)){
             parentId = Long.valueOf(id);
+            isRoot = false;
         }
-        List list = widgetService.buildTree(parentId);
+        List list = widgetService.buildTree(parentId,isRoot);
         modelMap.put("data",list);
         modelMap.put("success", true);
     }
+
+    @RequestMapping("/widget/draggable/{id}")
+    public void draggable(@PathVariable Long id, HttpServletRequest request,ModelMap modelMap){
+        Map map = RequestUtil.getPamaterMap(request);
+        String top = request.getParameter("top");
+        String left = request.getParameter("left");
+        widgetService.draggable(id, left,top);
+        modelMap.put("success", true);
+    }
+
+    @RequestMapping("/widget/resizable/{id}")
+    public void resizable(@PathVariable Long id, HttpServletRequest request,ModelMap modelMap){
+        Map map = RequestUtil.getPamaterMap(request);
+        String width = request.getParameter("width");
+        String height = request.getParameter("height");
+        widgetService.resizable(id, width, height);
+        modelMap.put("success", true);
+    }
+
 
 }

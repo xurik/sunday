@@ -33,5 +33,9 @@ public interface WidgetService {
 
     List<Map<String,?>> getLoopListById(Long id,String loopName);
 
-    List buildTree(Long parentId);
+    List buildTree(Long parentId,boolean isRoot);
+
+    Widget draggable(Long id,String left,String top);
+
+    Widget resizable(Long id,String width,String height);
 }

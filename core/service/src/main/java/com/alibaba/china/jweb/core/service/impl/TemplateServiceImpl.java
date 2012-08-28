@@ -12,6 +12,7 @@ import com.alibaba.china.jweb.core.service.TemplateService;
 import com.alibaba.china.jweb.core.tree.Node;
 import com.alibaba.china.jweb.core.util.JacksonUtil;
 import com.alibaba.china.jweb.core.util.PropertyConfigurer;
+import com.alibaba.china.jweb.core.util.VelocityUtil;
 import com.alibaba.china.jweb.core.util.WriterUtil;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -227,11 +228,30 @@ public class TemplateServiceImpl implements TemplateService {
                 return super.getType();
             }
         });
+        if(StringUtils.isBlank(widgetParameter.get("id"))){
+            widgetParameter.put("id",String.valueOf(data.getId()));
+        }
         VelocityContext velocityContext = new VelocityContext(widgetParameter);
-        velocityContext.put("J_PARAMETER",parameter);
-        velocityContext.put("J_WEB_PAGE",parameter.get("J_WEB_PAGE"));
-        velocityContext.put("J_WIDGET_ID",data.getId());
+        velocityContext.put("j_parameter",parameter);
+        StringBuffer sb = new StringBuffer();
+        position(sb,"top",widgetParameter);
+        position(sb,"left",widgetParameter);
+        position(sb,"width",widgetParameter);
+        position(sb,"height",widgetParameter);
+        velocityContext.put("j_position",sb.toString());
+        velocityContext.put("j_web_page",parameter.get("j_web_page"));
+        velocityContext.put("j_widget",data);
+        velocityContext.put("j_id",data.getId());
+        velocityContext.put("stringUtils",new StringUtils());
+        velocityContext.put("velocityUtil",new VelocityUtil());
         return velocityContext;
+    }
+
+    private void position(StringBuffer sb,String name,Map parameter){
+        Object value = parameter.get(name);
+        if(value != null && StringUtils.isNotBlank(value.toString())){
+            sb.append(name).append(":").append(value.toString()).append(";");
+        }
     }
 
     /**

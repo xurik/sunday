@@ -133,7 +133,16 @@ public class WidgetServiceImpl implements WidgetService {
         if (widget == null) {
             throw new WidgetException("can not find!id:" + id);
         }
-        String parameters = JacksonUtil.toJson(param);
+        Map<String,String> p = JacksonUtil.toObject(widget.getParameters(),new TypeReference<Map<String, String>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        if(p != null && !p.isEmpty()){
+            p.putAll(param);
+        }
+        String parameters = JacksonUtil.toJson(p);
         widget.setParameters(parameters);
         if(widget.getId() == null){
             widget.setGmtCreate(new Date());
@@ -268,12 +277,16 @@ public class WidgetServiceImpl implements WidgetService {
         widgetDao.save(parent);
     }
 
-    public List buildTree(Long parentId){
+    public List buildTree(Long parentId,boolean isRoot){
         Widget widget = widgetDao.findOne(parentId);
         if(widget == null){
             throw new WidgetException("can not find widget!id:"+parentId);
         }
         List result = new ArrayList();
+        if(isRoot){
+            result.add(createTreeNode(parentId, 0L, widget));
+            return result;
+        }
         String childrenJson = widget.getElementChildren();
         List<Long> childrenList = WidgetUtil.getChildrenList(childrenJson);
         for(Long id : childrenList){
@@ -281,17 +294,64 @@ public class WidgetServiceImpl implements WidgetService {
             if(child == null){
                 continue;
             }
-            Map map = new HashMap();
-            map.put("id",id);
-            String name = "";
-            if(StringUtils.isNotBlank(child.getName())){
-                name = child.getName();
-            }
-            map.put("name",name+"("+child.getType()+")");
-            map.put("pId",parentId);
-            map.put("isParent","true");
-            result.add(map);
+
+            result.add(createTreeNode(id ,parentId,child));
         }
         return result;
+    }
+
+    private Map createTreeNode(Long id ,Long parentId,Widget widget){
+        Map map = new HashMap();
+        map.put("id",id);
+        String name = "";
+        if(StringUtils.isNotBlank(widget.getName())){
+            name = widget.getName();
+        }else{
+            Map<String,String> p = JacksonUtil.toObject(widget.getParameters(),new TypeReference<Map<String, String>>() {
+                @Override
+                public Type getType() {
+                    return super.getType();
+                }
+            });
+            if(StringUtils.isNotBlank(p.get("name"))){
+                name = p.get("name");
+            }
+        }
+        map.put("name",widget.getId()+"-"+name+"("+widget.getType()+")");
+        map.put("pId",parentId);
+        map.put("isParent","true");
+        return map;
+    }
+
+    public Widget draggable(Long id,String left,String top){
+        Widget widget = widgetDao.findOne(id);
+        Map<String,String> parameter = JacksonUtil.toObject(widget.getParameters(), new TypeReference<Map<String, String>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        parameter.put("left",left);
+        parameter.put("top",top);
+        widget.setParameters(JacksonUtil.toJson(parameter));
+        widget.setGmtModified(new Date());
+        widgetDao.save(widget);
+        return widget;
+    }
+
+    public Widget resizable(Long id,String width,String height){
+        Widget widget = widgetDao.findOne(id);
+        Map<String,String> parameter = JacksonUtil.toObject(widget.getParameters(), new TypeReference<Map<String, String>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        parameter.put("width",width);
+        parameter.put("height",height);
+        widget.setParameters(JacksonUtil.toJson(parameter));
+        widget.setGmtModified(new Date());
+        widgetDao.save(widget);
+        return widget;
     }
 }
